@@ -1,0 +1,21 @@
+# --- Python cache ---
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.venv/
+
+# --- Output data (generated) ---
+output/
+
+# --- Generated files ---
+index.html
+
+# --- IDE / OS ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db

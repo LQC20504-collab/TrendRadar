@@ -130,6 +130,7 @@ rss:
     - id: "hacker-news"
       name: "Hacker News"
       url: "https://hnrss.org/frontpage"
+      enabled: false                  # 非 GIS/RS 源，禁用
 
     - id: "ruanyifeng"
       name: "阮一峰的网络日志"
@@ -140,6 +141,7 @@ rss:
     - id: "yahoo-finance"
       name: "雅虎财经"
       url: "https://finance.yahoo.com/news/rssindex"
+      enabled: false                  # 非 GIS/RS 源，禁用
 
     # ──────────────────────────────────────────────────────────
     # GIS / 遥感 / 数字地球 专业源

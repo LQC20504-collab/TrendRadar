@@ -218,7 +218,7 @@ rss:
 
     - id: "wechat-gis"
       name: "微信公众号 - GIS/遥感"
-      url: "http://localhost:4000/feeds/all.rss"
+      url: "${WECHAT_RSS_URL}/feeds/all.rss"
       max_age_days: 3
 
     # ──────────────────────────────────────────────────────────

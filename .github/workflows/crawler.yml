@@ -133,6 +133,18 @@ jobs:
             exit 1
           fi
 
+      - name: Inject WeChat RSS URL
+        if: success()
+        env:
+          WECHAT_RSS_URL: ${{ secrets.WECHAT_RSS_URL }}
+        run: |
+          if [ -n "$WECHAT_RSS_URL" ]; then
+            sed -i "s|\${WECHAT_RSS_URL}|$WECHAT_RSS_URL|g" config/config.yaml
+            echo "✅ WeChat RSS URL injected"
+          else
+            echo "⚠️ WECHAT_RSS_URL not set, wechat-gis source will use placeholder"
+          fi
+
       - name: Run crawler
         if: success()
         env:

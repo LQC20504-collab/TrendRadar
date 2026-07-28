@@ -118,7 +118,7 @@ rss:
   freshness_filter:
     enabled: true                     # 是否启用新鲜度过滤（true=启用, false=关闭）
 
-    max_age_days: 1                   # 最大文章年龄（天）
+    max_age_days: 3                   # 最大文章年龄（天）
                                       # - 正整数：只推送 N 天内的文章
                                       # - 0：禁用过滤，推送所有文章
 
@@ -140,6 +140,68 @@ rss:
     - id: "yahoo-finance"
       name: "雅虎财经"
       url: "https://finance.yahoo.com/news/rssindex"
+
+    # ──────────────────────────────────────────────────────────
+    # GIS / 遥感 / 数字地球 专业源
+    # ──────────────────────────────────────────────────────────
+
+    - id: "nasa-earth-observatory"
+      name: "NASA Earth Observatory"
+      url: "https://earthobservatory.nasa.gov/rss.xml"
+      max_age_days: 3
+
+    - id: "esa-observing-earth"
+      name: "ESA Observing the Earth"
+      url: "https://www.esa.int/Applications/Observing_the_Earth/rss"
+      max_age_days: 3
+
+    - id: "eos"
+      name: "EOS - Earth & Space Science News"
+      url: "https://eos.org/feed"
+      max_age_days: 3
+
+    - id: "spacenews"
+      name: "SpaceNews"
+      url: "https://spacenews.com/feed"
+      max_age_days: 3
+
+    - id: "gps-world"
+      name: "GPS World"
+      url: "https://www.gpsworld.com/feed"
+      max_age_days: 3
+
+    - id: "xyht"
+      name: "XYHT - 测绘/遥感杂志"
+      url: "https://www.xyht.com/feed"
+      max_age_days: 3
+
+    - id: "geoconnexion"
+      name: "GeoConnexion"
+      url: "https://www.geoconnexion.com/feed"
+      max_age_days: 3
+
+    # ──────────────────────────────────────────────────────────
+    # 卫星 / 航天 行业源
+    # ──────────────────────────────────────────────────────────
+
+    - id: "planet-labs"
+      name: "Planet Labs"
+      url: "https://www.planet.com/feed"
+      max_age_days: 3
+
+    - id: "maxar"
+      name: "Maxar Blog"
+      url: "https://blog.maxar.com/feed"
+      max_age_days: 3
+
+    # ──────────────────────────────────────────────────────────
+    # AI / 科技 源（与 GIS/RS 交叉）
+    # ──────────────────────────────────────────────────────────
+
+    - id: "google-ai-blog"
+      name: "Google AI Blog"
+      url: "https://blog.research.google/feed"
+      max_age_days: 3
 
     # 自定义源示例
     # - id: "custom-feed"

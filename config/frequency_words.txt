@@ -150,61 +150,8 @@
 [WORD_GROUPS]
 
 # ═══════════════════════════════════════════════════════════════
-#                         企业与品牌
+#                         GIS 考研
 # ═══════════════════════════════════════════════════════════════
-
-/深度求索|幻方量化|梁文锋|\bDeepSeek\b/ => DeepSeek
-
-/华为|任正非|余承东|鸿蒙|海思|昇腾|鲲鹏|\bHUAWEI\b|\bHarmonyOS\b|\bHiSilicon\b/ => 华为
-
-/大疆|汪滔|灵眸|如影|\bDJI\b|\bRoboMaster\b|\bMavic\b|\bZenmuse\b/ => 大疆
-
-/qwen|minimax|glm/ => 国产开源模型
-
-/特斯拉|马斯克|\bTesla\b|\bElon Musk\b|\bCybertruck\b|\bModel 3\b|\bModel Y\b|\bModel S\b|\bModel X\b|\bFSD\b/ => 特斯拉
-
-/英伟达|黄仁勋|\bNVIDIA\b|\bGeForce\b|\bRTX\b|\bCUDA\b|\bJensen Huang\b/ => 英伟达
-/苏姿丰|锐龙|霄龙|\bAMD\b|\bRyzen\b|\bEPYC\b|\bRadeon\b|\bLisa Su\b/ => AMD
-
-/微软|\bMicrosoft\b|\bWindows\b|\bAzure\b|\bSatya Nadella\b|\bCopilot\b/ => 微软
-/谷歌|皮查伊|安卓|油管|\bGoogle\b|\bAlphabet\b|\bAndroid\b|\bChrome\b|\bYouTube\b|\bGemini\b|\bDeepMind\b|\bWaymo\b/ => 谷歌
-/\bOpenAI\b|\bChatGPT\b|\bSora\b|\bDALL-E\b|\bSam Altman\b|\bGreg Brockman\b/ => OpenAI
-/\bAnthropic\b|\bClaude\b|\bDario Amodei\b/ => Claude
-
-
-# ═══════════════════════════════════════════════════════════════
-#                         科技领域
-# ═══════════════════════════════════════════════════════════════
-
-[AI 相关]
-/(?<![a-zA-Z])ai(?![a-zA-Z])/
-人工智能
-
-/水电|雅鲁藏布江/ => 水电
-/光伏|太阳能/ => 光伏
-核能
-能源
-
-/自动驾驶|无人驾驶|智驾/ => 自动驾驶
-
-机器人
-/机械狗|四足/ => 机器狗
-具身智能
-
-/月球|登月|火星|宇宙|飞船|航天|空间站|卫星/ => 航天
-
-# 产业政策
-生产力
-
-
-# ═══════════════════════════════════════════════════════════════
-#                         行业平台 / 内容社区
-# ═══════════════════════════════════════════════════════════════
-
-[内容社区]
-/微信公众号|公众号/ => 微信公众号
-/知乎|zhihu/ => 知乎
-/小红书|RED|xiaohongshu/ => 小红书
 
 [GIS 考研]
 /地信考研|\bGIS\b.*考研|地理信息.*考研/ => GIS考研

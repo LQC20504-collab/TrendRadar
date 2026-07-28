@@ -152,7 +152,22 @@ rss:
 
     - id: "esa-observing-earth"
       name: "ESA Observing the Earth"
-      url: "https://www.esa.int/Applications/Observing_the_Earth/rss"
+      url: "http://www.esa.int/rssfeed/Our_Activities/Observing_the_Earth"
+      max_age_days: 3
+
+    - id: "esa-space-news"
+      name: "ESA Space News"
+      url: "http://www.esa.int/rssfeed/Our_Activities/Space_News"
+      max_age_days: 3
+
+    - id: "esa-space-science"
+      name: "ESA Space Science"
+      url: "http://www.esa.int/rssfeed/Our_Activities/Space_Science"
+      max_age_days: 3
+
+    - id: "esa-navigation"
+      name: "ESA Navigation"
+      url: "http://www.esa.int/rssfeed/Our_Activities/Navigation"
       max_age_days: 3
 
     - id: "eos"
@@ -178,6 +193,21 @@ rss:
     - id: "geoconnexion"
       name: "GeoConnexion"
       url: "https://www.geoconnexion.com/feed"
+      max_age_days: 3
+
+    - id: "geospatial-world"
+      name: "Geospatial World"
+      url: "https://www.geospatialworld.net/feed/"
+      max_age_days: 3
+
+    - id: "gis-lounge"
+      name: "GIS Lounge"
+      url: "https://www.gislounge.com/feed/"
+      max_age_days: 3
+
+    - id: "gis-geography"
+      name: "GIS Geography"
+      url: "https://gisgeography.com/feed/"
       max_age_days: 3
 
     # ──────────────────────────────────────────────────────────

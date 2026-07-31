@@ -130,6 +130,25 @@ cd 你的项目名
 
 ---
 
+## 🕐 日常使用
+
+> **配置一次，之后每次用 Cherry Studio 时自动生效。**
+
+### 我选了 STDIO 模式
+
+**什么都不用做。** 每次在 Cherry Studio 中打开对话时，系统会自动启动 TrendRadar 的 MCP 服务。关掉 Cherry Studio 后服务自动停止，无需手动操作。
+
+### 我选了 HTTP 模式
+
+每次使用前，**需要先手动启动服务**：
+
+- **Windows**：双击项目文件夹中的 `start-http.bat`
+- **Mac/Linux**：在终端执行 `./start-http.sh`
+
+启动后保持窗口开着，然后打开 Cherry Studio 即可使用。用完可以关闭窗口停止服务。
+
+---
+
 ## 🎯 进阶配置
 
 ### HTTP 模式（可选）

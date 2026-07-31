@@ -6,6 +6,7 @@
 """
 
 import os
+import re
 from pathlib import Path
 from typing import Dict, Any, Optional
 
@@ -197,14 +198,27 @@ def _load_rss_config(config_data: Dict) -> Dict:
         print(f"[警告] RSS freshness_filter.max_age_days 格式错误 ({raw_max_age})，使用默认值 3")
         max_age_days = 3
 
-    # RSS 配置直接从 config.yaml 读取，不再支持环境变量
+    # RSS 配置直接从 config.yaml 读取，支持 ${VAR} 环境变量替换
+    # 这样 GitHub Actions 的 sed 注入不再是必须的，本地和 Docker 也能用
+    feeds = rss.get("feeds", [])
+    expanded_feeds = []
+    for feed in feeds:
+        feed = dict(feed)  # copy to avoid mutating original
+        if "url" in feed:
+            feed["url"] = re.sub(
+                r'\$\{(\w+)\}',
+                lambda m: os.environ.get(m.group(1), m.group(0)),
+                feed["url"]
+            )
+        expanded_feeds.append(feed)
+
     return {
         "ENABLED": rss.get("enabled", False),
         "REQUEST_INTERVAL": advanced_rss.get("request_interval", 2000),
         "TIMEOUT": advanced_rss.get("timeout", 15),
         "USE_PROXY": advanced_rss.get("use_proxy", False),
         "PROXY_URL": rss_proxy_url,
-        "FEEDS": rss.get("feeds", []),
+        "FEEDS": expanded_feeds,
         "FRESHNESS_FILTER": {
             "ENABLED": freshness_filter.get("enabled", True),  # 默认启用
             "MAX_AGE_DAYS": max_age_days,

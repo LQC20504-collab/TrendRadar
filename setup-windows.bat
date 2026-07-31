@@ -45,12 +45,29 @@ REM 检查 Python
 echo [1/4] 🐍 检查 Python...
 python --version >nul 2>&1
 if %errorlevel% neq 0 (
-    echo ❌ 未检测到 Python，请先安装 Python 3.10+
-    echo 下载地址: https://www.python.org/downloads/
-    pause
-    exit /b 1
+    echo.
+    echo ⚠️ python 命令未找到，尝试 py 命令...
+    py --version >nul 2>&1
+    if %errorlevel% neq 0 (
+        echo ❌ 未检测到 Python，请先安装 Python 3.10+
+        echo.
+        echo 下载地址（复制到浏览器打开）:
+        echo   https://www.python.org/downloads/
+        echo.
+        echo 安装提示:
+        echo   1. 勾选 "Add Python to PATH"（非常重要！）
+        echo   2. 安装完成后重启此脚本
+        echo.
+        pause
+        exit /b 1
+    ) else (
+        echo ✅ 已找到 py 命令（Python 启动器）
+        REM 创建 python 别名，后续统一用 python
+        doskey python=py $*
+    )
+) else (
+    for /f "tokens=*" %%i in ('python --version') do echo ✅ %%i
 )
-for /f "tokens=*" %%i in ('python --version') do echo ✅ %%i
 echo.
 
 REM 检查 UV
@@ -136,18 +153,47 @@ echo ✅ 依赖安装成功
 echo.
 
 echo [4/4] ⚙️  检查配置文件...
+
+REM 检查 config.yaml
 if not exist "config\config.yaml" (
-    echo ⚠️  配置文件不存在: config\config.yaml
+    echo ⚠️  config\config.yaml 不存在
     if exist "config\config.example.yaml" (
         echo.
-        echo 创建配置文件:
-        echo   1. 复制: copy config\config.example.yaml config\config.yaml
-        echo   2. 编辑: notepad config\config.yaml
-        echo   3. 填入 API 密钥
+        copy "config\config.example.yaml" "config\config.yaml" >nul 2>&1
+        if exist "config\config.yaml" (
+            echo ✅ 已自动从 config\config.example.yaml 创建
+            echo.
+            echo 即将用记事本打开 config\config.yaml，请填写:
+            echo   - 推送渠道的 Webhook URL（必填）
+            echo   - AI API Key（可选）
+            echo.
+            echo 填完后保存关闭记事本即可。
+            echo.
+            pause
+            start notepad "config\config.yaml"
+        )
     )
     echo.
 ) else (
     echo ✅ config\config.yaml 已存在
+)
+
+REM 检查 frequency_words.txt
+if not exist "config\frequency_words.txt" (
+    echo ⚠️  config\frequency_words.txt 不存在！
+    echo.
+    echo 请创建一个该文件，每行写一个你关心的关键词。
+    echo 示例内容:
+    echo ----------------------------------------
+    echo AI
+    echo 华为
+    echo 特斯拉
+    echo ----------------------------------------
+    echo.
+    echo 如果留空，则会推送所有新闻（受推送大小限制）。
+    echo.
+) else (
+    echo ✅ config\frequency_words.txt 已存在
 )
 echo.
 
@@ -162,7 +208,14 @@ echo ==========================================
 echo            部署完成！
 echo ==========================================
 echo.
-echo 📋 MCP 服务器配置信息（用于 Claude Desktop）:
+echo 🧪 测试运行（确认配置无误后执行）:
+echo   %PROJECT_ROOT%\run.bat
+echo.
+echo   或手动运行:
+echo   cd /d "%PROJECT_ROOT%"
+echo   uv run python -m trendradar
+echo.
+echo 📋 MCP 服务器配置信息（用于 Cherry Studio）:
 echo.
 echo   命令: %UV_PATH%
 echo   工作目录: %PROJECT_ROOT%

@@ -82,34 +82,60 @@ if ($SmokeTest) {
     exit 0
 }
 
-# ── 2. 拉取 RSS ───────────────────────────────────────────
+# ── 2. 拉取 RSS（先到临时文件，避免无变化时污染工作区）────
 Write-Log "=== 拉取 RSS ==="
 $rssAbsPath = Join-Path $repoRoot $RssFile
 $rssDir = Split-Path -Parent $rssAbsPath
 if (-not (Test-Path $rssDir)) { New-Item -ItemType Directory -Path $rssDir -Force | Out-Null }
 
-curl.exe -s --connect-timeout 10 --max-time 60 -o $rssAbsPath $FeedUrl
+$tmpRss = Join-Path $env:TEMP "wewe-rss-download.rss"
+curl.exe -s --connect-timeout 10 --max-time 60 -o $tmpRss $FeedUrl
 if ($LASTEXITCODE -ne 0) {
     Write-Log "ERR 拉取失败 (curl exit $LASTEXITCODE)" "ERROR"
+    Remove-Item $tmpRss -Force -ErrorAction SilentlyContinue
     exit 1
 }
 
 # 校验内容：必须含 <rss 且 ≥1 <item>
-$content = Get-Content -Path $rssAbsPath -Raw -Encoding UTF8
+$content = Get-Content -Path $tmpRss -Raw -Encoding UTF8
 if ($content -notmatch "<rss" -or $content -notmatch "<item>") {
     Write-Log "ERR RSS 内容无效（缺 <rss 或 <item>），已保存到 $rssAbsPath 供检查" "ERROR"
+    Copy-Item $tmpRss $rssAbsPath -Force
+    Remove-Item $tmpRss -Force -ErrorAction SilentlyContinue
     exit 1
 }
 $itemCount = ([regex]::Matches($content, "<item>")).Count
 Write-Log "OK  拉取成功: $itemCount 个 item -> $rssAbsPath"
 
-# ── 3. 检查是否有变化（幂等：无变化则跳过 commit/push）─────
-$porcelain = git -C $repoRoot status --porcelain -- $RssFile
-if (-not $porcelain) {
-    Write-Log "SKIP RSS 内容无变化，跳过 commit/push"
+# ── 3. 幂等检查：与 HEAD 版本比较（剔除 lastBuildDate）────
+# wewe-rss 每次请求都会刷新 <lastBuildDate> 字段，若直接比较全文件
+# 则永远"有变化"，每次运行都会产生空转提交。故先剔除该字段再比较。
+function Normalize-Rss([string]$s) {
+    $s = [regex]::Replace($s, '<lastBuildDate>[^<]*</lastBuildDate>', '')
+    return $s.Replace("`r`n", "`n").Replace("`r", "`n")
+}
+
+$headTmp = Join-Path $env:TEMP "wewe-rss-head.rss"
+Push-Location $repoRoot
+cmd /c "git show HEAD:$RssFile > `"$headTmp`" 2>NUL"
+Pop-Location
+$headContent = ""
+if (Test-Path $headTmp) {
+    $headContent = Get-Content -Path $headTmp -Raw -Encoding UTF8
+    Remove-Item $headTmp -Force -ErrorAction SilentlyContinue
+}
+
+if ((Normalize-Rss $content) -ceq (Normalize-Rss $headContent)) {
+    Write-Log "SKIP RSS 内容无变化（仅 lastBuildDate 更新），跳过 commit/push"
+    Remove-Item $tmpRss -Force -ErrorAction SilentlyContinue
     Write-Log "    日志: $logFile"
     exit 0
 }
+Write-Log "OK  RSS 内容有实质变化，继续提交"
+
+# 有实质变化才写盘（保持原始字节，LF 换行不变）
+Copy-Item $tmpRss $rssAbsPath -Force
+Remove-Item $tmpRss -Force -ErrorAction SilentlyContinue
 
 # ── 4. commit（只提交 RSS 文件，不带入其他未跟踪文件）──────
 Write-Log "=== git commit ==="

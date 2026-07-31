@@ -48,7 +48,7 @@ Write-Log "=== 前置检查 ==="
 
 # 1.1 wewe-rss 服务可达性（/feeds 路径无需鉴权）
 try {
-    $status = curl.exe -s -o NUL -w "%{http_code}" --connect-timeout 5 $FeedUrl
+    $status = curl.exe -s -o NUL -w "%{http_code}" --connect-timeout 5 --max-time 15 $FeedUrl
     if ($status -ne "200") { throw "HTTP $status" }
     Write-Log "OK  wewe-rss 服务可达: $FeedUrl (HTTP 200)"
 }

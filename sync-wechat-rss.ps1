@@ -9,20 +9,18 @@
 #           → 提交并 push 到 GitHub 仓库 → workflow 起临时 http.server 服务这些文件
 #           供 fetcher 抓取。零公网依赖、零隧道、零 Secret。
 #
-# 默认同步 4 个文件（与 config.yaml 中 3 个 per-account 微信源对应）：
+# 默认同步 23 个文件（与 config.yaml 中 22 个 per-account 微信源对应）：
 #   feeds/all.rss               ← ${WECHAT_RSS_URL}/feeds/all.rss             （聚合源，失败即中止）
-#   feeds/MP_WXS_3901345172.rss ← ${WECHAT_RSS_URL}/feeds/MP_WXS_3901345172.rss （地研联，失败仅告警）
-#   feeds/MP_WXS_2394767200.rss ← ${WECHAT_RSS_URL}/feeds/MP_WXS_2394767200.rss （麻辣GIS，失败仅告警）
-#   feeds/MP_WXS_3015957868.rss ← ${WECHAT_RSS_URL}/feeds/MP_WXS_3015957868.rss （GIS前沿，失败仅告警）
+#   feeds/MP_WXS_*.rss × 22     ← ${WECHAT_RSS_URL}/feeds/MP_WXS_*.rss        （按账号源，失败仅告警）
 #
 # 用法：
-#   .\sync-wechat-rss.ps1                # 完整同步（拉取 4 个源 + commit + push）
+#   .\sync-wechat-rss.ps1                # 完整同步（拉取 23 个源 + commit + push）
 #   .\sync-wechat-rss.ps1 -SmokeTest     # 只检查环境（wewe-rss 可达性 + git + gh），不做任何修改
 #   .\sync-wechat-rss.ps1 -NoPush        # 拉取 + commit，不 push（调试用）
 #
 # 参数：
 #   -FeedUrl/-RssFile  单文件模式（向后兼容）：任一提供时仅同步这一对，行为与旧版一致；
-#                      两者均省略时走默认的 4 文件同步。
+#                      两者均省略时走默认的 23 文件同步。
 # ═══════════════════════════════════════════════════════════════════════════════
 
 param(
@@ -64,6 +62,25 @@ else {
         "feeds/MP_WXS_3901345172.rss" = "http://localhost:4000/feeds/MP_WXS_3901345172.rss"
         "feeds/MP_WXS_2394767200.rss" = "http://localhost:4000/feeds/MP_WXS_2394767200.rss"
         "feeds/MP_WXS_3015957868.rss" = "http://localhost:4000/feeds/MP_WXS_3015957868.rss"
+        "feeds/MP_WXS_3531160202.rss" = "http://localhost:4000/feeds/MP_WXS_3531160202.rss"
+        "feeds/MP_WXS_3236365612.rss" = "http://localhost:4000/feeds/MP_WXS_3236365612.rss"
+        "feeds/MP_WXS_3204156364.rss" = "http://localhost:4000/feeds/MP_WXS_3204156364.rss"
+        "feeds/MP_WXS_3010153083.rss" = "http://localhost:4000/feeds/MP_WXS_3010153083.rss"
+        "feeds/MP_WXS_3946166084.rss" = "http://localhost:4000/feeds/MP_WXS_3946166084.rss"
+        "feeds/MP_WXS_3200210505.rss" = "http://localhost:4000/feeds/MP_WXS_3200210505.rss"
+        "feeds/MP_WXS_3088987824.rss" = "http://localhost:4000/feeds/MP_WXS_3088987824.rss"
+        "feeds/MP_WXS_2390266245.rss" = "http://localhost:4000/feeds/MP_WXS_2390266245.rss"
+        "feeds/MP_WXS_2390983620.rss" = "http://localhost:4000/feeds/MP_WXS_2390983620.rss"
+        "feeds/MP_WXS_3890700856.rss" = "http://localhost:4000/feeds/MP_WXS_3890700856.rss"
+        "feeds/MP_WXS_3240209001.rss" = "http://localhost:4000/feeds/MP_WXS_3240209001.rss"
+        "feeds/MP_WXS_3559287236.rss" = "http://localhost:4000/feeds/MP_WXS_3559287236.rss"
+        "feeds/MP_WXS_3242160635.rss" = "http://localhost:4000/feeds/MP_WXS_3242160635.rss"
+        "feeds/MP_WXS_3897136637.rss" = "http://localhost:4000/feeds/MP_WXS_3897136637.rss"
+        "feeds/MP_WXS_3288559402.rss" = "http://localhost:4000/feeds/MP_WXS_3288559402.rss"
+        "feeds/MP_WXS_3083095833.rss" = "http://localhost:4000/feeds/MP_WXS_3083095833.rss"
+        "feeds/MP_WXS_3561381639.rss" = "http://localhost:4000/feeds/MP_WXS_3561381639.rss"
+        "feeds/MP_WXS_3239016774.rss" = "http://localhost:4000/feeds/MP_WXS_3239016774.rss"
+        "feeds/MP_WXS_3096352905.rss" = "http://localhost:4000/feeds/MP_WXS_3096352905.rss"
     }
 }
 # 主源：聚合源 all.rss（单文件模式即用户指定的那一对），失败时中止整个同步

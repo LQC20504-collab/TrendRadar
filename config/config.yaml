@@ -157,6 +157,101 @@ rss:
       url: "${WECHAT_RSS_URL}/feeds/MP_WXS_3015957868.rss"
       max_age_days: 3
 
+    - id: "wechat-chaoai-gis"
+      name: "超爱GIS"
+      url: "${WECHAT_RSS_URL}/feeds/MP_WXS_3531160202.rss"
+      max_age_days: 3
+
+    - id: "wechat-gis-siwei"
+      name: "GIS思维"
+      url: "${WECHAT_RSS_URL}/feeds/MP_WXS_3236365612.rss"
+      max_age_days: 3
+
+    - id: "wechat-huitiandi"
+      name: "慧天地"
+      url: "${WECHAT_RSS_URL}/feeds/MP_WXS_3204156364.rss"
+      max_age_days: 3
+
+    - id: "wechat-jisi-kezhan"
+      name: "极思客栈"
+      url: "${WECHAT_RSS_URL}/feeds/MP_WXS_3010153083.rss"
+      max_age_days: 3
+
+    - id: "wechat-jrs-yaogan"
+      name: "JRS国际遥感学报"
+      url: "${WECHAT_RSS_URL}/feeds/MP_WXS_3946166084.rss"
+      max_age_days: 3
+
+    - id: "wechat-shijie-dili-yanjiu"
+      name: "世界地理研究"
+      url: "${WECHAT_RSS_URL}/feeds/MP_WXS_3200210505.rss"
+      max_age_days: 3
+
+    - id: "wechat-xiashen-d"
+      name: "虾神说D"
+      url: "${WECHAT_RSS_URL}/feeds/MP_WXS_3088987824.rss"
+      max_age_days: 3
+
+    - id: "wechat-yizhirui"
+      name: "易智瑞"
+      url: "${WECHAT_RSS_URL}/feeds/MP_WXS_2390266245.rss"
+      max_age_days: 3
+
+    - id: "wechat-supermap"
+      name: "超图软件集团"
+      url: "${WECHAT_RSS_URL}/feeds/MP_WXS_2390983620.rss"
+      max_age_days: 3
+
+    - id: "wechat-cs-sw-jgst"
+      name: "城市水文与景观生态"
+      url: "${WECHAT_RSS_URL}/feeds/MP_WXS_3890700856.rss"
+      max_age_days: 3
+
+    - id: "wechat-cityplus"
+      name: "CityPlus"
+      url: "${WECHAT_RSS_URL}/feeds/MP_WXS_3240209001.rss"
+      max_age_days: 3
+
+    - id: "wechat-dtx-gis"
+      name: "地图学与地理信息系统"
+      url: "${WECHAT_RSS_URL}/feeds/MP_WXS_3559287236.rss"
+      max_age_days: 3
+
+    - id: "wechat-giser-study"
+      name: "GISer学习团"
+      url: "${WECHAT_RSS_URL}/feeds/MP_WXS_3242160635.rss"
+      max_age_days: 3
+
+    - id: "wechat-kjzn-soft"
+      name: "空间智能软件技术大会"
+      url: "${WECHAT_RSS_URL}/feeds/MP_WXS_3897136637.rss"
+      max_age_days: 3
+
+    - id: "wechat-shuijingzhu"
+      name: "水经注GIS"
+      url: "${WECHAT_RSS_URL}/feeds/MP_WXS_3288559402.rss"
+      max_age_days: 3
+
+    - id: "wechat-xiaoyuanhou"
+      name: "小猿猴GISer"
+      url: "${WECHAT_RSS_URL}/feeds/MP_WXS_3083095833.rss"
+      max_age_days: 3
+
+    - id: "wechat-yaogan-xuebao"
+      name: "遥感学报"
+      url: "${WECHAT_RSS_URL}/feeds/MP_WXS_3561381639.rss"
+      max_age_days: 3
+
+    - id: "wechat-zg-dixin-xiehui"
+      name: "中国地理信息产业协会"
+      url: "${WECHAT_RSS_URL}/feeds/MP_WXS_3239016774.rss"
+      max_age_days: 3
+
+    - id: "wechat-zg-dili-xuehui"
+      name: "中国地理学会"
+      url: "${WECHAT_RSS_URL}/feeds/MP_WXS_3096352905.rss"
+      max_age_days: 3
+
     # ──────────────────────────────────────────────────────────
     # 卫星 / 航天 行业源
     # ──────────────────────────────────────────────────────────

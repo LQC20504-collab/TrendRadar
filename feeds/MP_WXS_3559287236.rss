@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+    <channel>
+        <title>地图学与地理信息系统</title>
+        <link>https://legacy-boards-them-campaigns.trycloudflare.com/feeds/MP_WXS_3559287236.rss</link>
+        <description>GIS科学知识与技术代码的分享站！</description>
+        <lastBuildDate>Mon, 15 Jun 2026 04:33:21 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>WeWe-RSS</generator>
+        <language>zh-cn</language>
+        <image>
+            <title>地图学与地理信息系统</title>
+            <url>http://wx.qlogo.cn/mmhead/Q3auHgzwzM5iarKYiciaibLModt7BB93uGHU7jjSVjZFm3shewRvAtxXmQ/0</url>
+            <link>https://legacy-boards-them-campaigns.trycloudflare.com/feeds/MP_WXS_3559287236.rss</link>
+        </image>
+        <item>
+            <title><![CDATA[ENSO（MEI V2）/DMI/IMSI 月尺度时间序列数据]]></title>
+            <link>https://mp.weixin.qq.com/s/ROB3XJG0T78dZcNdhAL_4A</link>
+            <guid>https://mp.weixin.qq.com/s/ROB3XJG0T78dZcNdhAL_4A</guid>
+            <pubDate>Mon, 15 Jun 2026 04:33:21 GMT</pubDate>
+            <enclosure url="https://mmbiz.qpic.cn/mmbiz_jpg/hUXFE0V8fazUicQaicbECbSCcC76L84QxkrqibfpE8lQOe0f1tuevR6Jz7aPTMv79xWYJR3OgeGwd0cLoolHCwzOUKwrowyFAwMdh3mSQGxGGU/0?wx_fmt=jpeg" length="0" type="image//mmbiz_jpg/hUXFE0V8fazUicQaicbECbSCcC76L84QxkrqibfpE8lQOe0f1tuevR6Jz7aPTMv79xWYJR3OgeGwd0cLoolHCwzOUKwrowyFAwMdh3mSQGxGGU/0"/>
+        </item>
+        <item>
+            <title><![CDATA[Indian Summer Monsoon Index（ISMI）GEE逐月时间序列计算]]></title>
+            <link>https://mp.weixin.qq.com/s/4gBn9Tt-XowBMB6HY0ywwQ</link>
+            <guid>https://mp.weixin.qq.com/s/4gBn9Tt-XowBMB6HY0ywwQ</guid>
+            <pubDate>Mon, 15 Jun 2026 04:33:21 GMT</pubDate>
+            <enclosure url="https://mmbiz.qpic.cn/mmbiz_jpg/hUXFE0V8fayjbEolKBeW3h0OdyeICLWib8uM9BJrjdsD4KJresTgEKEHJjS1ic6msYCPibfOiafXh29JwKTjibr9Rkiazze5C2ymXOPtynevDCIjU/0?wx_fmt=jpeg" length="0" type="image//mmbiz_jpg/hUXFE0V8fayjbEolKBeW3h0OdyeICLWib8uM9BJrjdsD4KJresTgEKEHJjS1ic6msYCPibfOiafXh29JwKTjibr9Rkiazze5C2ymXOPtynevDCIjU/0"/>
+        </item>
+        <item>
+            <title><![CDATA[第25集 · CDSRD：中国日尺度太阳辐射数据集]]></title>
+            <link>https://mp.weixin.qq.com/s/ShPktgqVEqBOE7N3389A5g</link>
+            <guid>https://mp.weixin.qq.com/s/ShPktgqVEqBOE7N3389A5g</guid>
+            <pubDate>Wed, 27 May 2026 10:59:53 GMT</pubDate>
+            <enclosure url="https://mmbiz.qpic.cn/sz_mmbiz_jpg/q75hkicGKcGQRia2qiacCpTpJWQSY01Bp3h0533Rwu8QFGDNUa67TttPRQKCg2BQ3ZiadPW19od6ePbka5maIibUTUgkx7dzTRGFyvh8yfx6ajss/0?wx_fmt=jpeg" length="0" type="image//sz_mmbiz_jpg/q75hkicGKcGQRia2qiacCpTpJWQSY01Bp3h0533Rwu8QFGDNUa67TttPRQKCg2BQ3ZiadPW19od6ePbka5maIibUTUgkx7dzTRGFyvh8yfx6ajss/0"/>
+        </item>
+        <item>
+            <title><![CDATA[R语言——栅格时间序列线性去趋势]]></title>
+            <link>https://mp.weixin.qq.com/s/qMk-uSVYj02sJrbg2eteHA</link>
+            <guid>https://mp.weixin.qq.com/s/qMk-uSVYj02sJrbg2eteHA</guid>
+            <pubDate>Sun, 17 May 2026 13:26:16 GMT</pubDate>
+            <enclosure url="https://mmbiz.qpic.cn/mmbiz_jpg/hUXFE0V8faySjqL3arwYat0kbh70ZCoufMEPH6DudSeQSFqbt5UpZXibdn3kS8kHPDVGZCmkKOIHZ2p2pF9xTSeNcMkEaDtJyLXAbY0q7nXk/0?wx_fmt=jpeg" length="0" type="image//mmbiz_jpg/hUXFE0V8faySjqL3arwYat0kbh70ZCoufMEPH6DudSeQSFqbt5UpZXibdn3kS8kHPDVGZCmkKOIHZ2p2pF9xTSeNcMkEaDtJyLXAbY0q7nXk/0"/>
+        </item>
+        <item>
+            <title><![CDATA[AlphaEarth Foundations(AFM)结合GEDI数据通过随机森林RF反演地上生物量AGB]]></title>
+            <link>https://mp.weixin.qq.com/s/47DawK9oBWoUrC_8sryubw</link>
+            <guid>https://mp.weixin.qq.com/s/47DawK9oBWoUrC_8sryubw</guid>
+            <pubDate>Tue, 05 May 2026 04:49:10 GMT</pubDate>
+            <enclosure url="https://mmbiz.qpic.cn/mmbiz_jpg/hUXFE0V8faw4vHCj0NS3wRIzjxvRhgnplHxgYvJRTT56nlAYeDSuq5IqEn3blDfpLltelKJYWG3DfaOqibJSfsjZzA5CIib3g01GCzM7n9pOI/0?wx_fmt=jpeg" length="0" type="image//mmbiz_jpg/hUXFE0V8faw4vHCj0NS3wRIzjxvRhgnplHxgYvJRTT56nlAYeDSuq5IqEn3blDfpLltelKJYWG3DfaOqibJSfsjZzA5CIib3g01GCzM7n9pOI/0"/>
+        </item>
+        <item>
+            <title><![CDATA[R语言——方差分解评估GPP与ET对WUE的贡献度]]></title>
+            <link>https://mp.weixin.qq.com/s/Cz_xSlaDk5iIFiQQQCtTUw</link>
+            <guid>https://mp.weixin.qq.com/s/Cz_xSlaDk5iIFiQQQCtTUw</guid>
+            <pubDate>Fri, 01 May 2026 12:42:54 GMT</pubDate>
+            <enclosure url="https://mmbiz.qpic.cn/mmbiz_jpg/hUXFE0V8fawx01wm1W9WqEjXogG8lNYJM9TOHFXWiamicQZk34egHsQonDSqvsRibPic9kN2CkiaXTJy9Xkv6Yz14aR3z6pDrfElCGbLicW6tXEfg/0?wx_fmt=jpeg" length="0" type="image//mmbiz_jpg/hUXFE0V8fawx01wm1W9WqEjXogG8lNYJM9TOHFXWiamicQZk34egHsQonDSqvsRibPic9kN2CkiaXTJy9Xkv6Yz14aR3z6pDrfElCGbLicW6tXEfg/0"/>
+        </item>
+        <item>
+            <title><![CDATA[R语言——偏最小二乘(PLS)回归方法各种影响因素变量投影重要性VIP值]]></title>
+            <link>https://mp.weixin.qq.com/s/GmzR6W7_e524ZoLOfzf35w</link>
+            <guid>https://mp.weixin.qq.com/s/GmzR6W7_e524ZoLOfzf35w</guid>
+            <pubDate>Tue, 28 Apr 2026 12:51:24 GMT</pubDate>
+            <enclosure url="https://mmbiz.qpic.cn/sz_mmbiz_jpg/hUXFE0V8fayoIgvF1o80XFGPMXatW2xGElRQx5ZoN3tJtTJFIibCI0KnbbRmzTZsuPh78oVJJZ5C6vTcDuZ3sb17NhLQQtkziajXO9Gvtb6OY/0?wx_fmt=jpeg" length="0" type="image//sz_mmbiz_jpg/hUXFE0V8fayoIgvF1o80XFGPMXatW2xGElRQx5ZoN3tJtTJFIibCI0KnbbRmzTZsuPh78oVJJZ5C6vTcDuZ3sb17NhLQQtkziajXO9Gvtb6OY/0"/>
+        </item>
+        <item>
+            <title><![CDATA[MATLAB代码——气候对植被的滞后累积时空效应]]></title>
+            <link>https://mp.weixin.qq.com/s/_6lBhOxgvrzv0-bRcq2cTQ</link>
+            <guid>https://mp.weixin.qq.com/s/_6lBhOxgvrzv0-bRcq2cTQ</guid>
+            <pubDate>Thu, 16 Apr 2026 07:08:16 GMT</pubDate>
+            <enclosure url="http://mmbiz.qpic.cn/sz_mmbiz_jpg/hUXFE0V8fax3oADwFmnvFrlfGxJeqvd1wz0chMbuYCqrbzMbOicoBCquiaz7hqZV62qCFZK6xHWcY8ibZO6vgbdjoSGdFsg7s6HOnG7UlcoHwA/0?wx_fmt=jpeg" length="0" type="image//sz_mmbiz_jpg/hUXFE0V8fax3oADwFmnvFrlfGxJeqvd1wz0chMbuYCqrbzMbOicoBCquiaz7hqZV62qCFZK6xHWcY8ibZO6vgbdjoSGdFsg7s6HOnG7UlcoHwA/0"/>
+        </item>
+        <item>
+            <title><![CDATA[青藏高原相关碳通量观测数据]]></title>
+            <link>https://mp.weixin.qq.com/s/pVEWR_pq27eOqMwnV1D6XQ</link>
+            <guid>https://mp.weixin.qq.com/s/pVEWR_pq27eOqMwnV1D6XQ</guid>
+            <pubDate>Thu, 26 Mar 2026 14:19:42 GMT</pubDate>
+            <enclosure url="https://mmbiz.qpic.cn/sz_mmbiz_jpg/hUXFE0V8fay5m6ibpVJD7kkh7ELdf55tTOGLhgt78ZcsV7fV7gPuFotCTb9Fwq9dKKANqWzrgfribsTB9ozI1YUfYQoKtog1QIRlopWsAriaW0/0?wx_fmt=jpeg" length="0" type="image//sz_mmbiz_jpg/hUXFE0V8fay5m6ibpVJD7kkh7ELdf55tTOGLhgt78ZcsV7fV7gPuFotCTb9Fwq9dKKANqWzrgfribsTB9ozI1YUfYQoKtog1QIRlopWsAriaW0/0"/>
+        </item>
+        <item>
+            <title><![CDATA[MOD16A2GF质量控制GEE]]></title>
+            <link>https://mp.weixin.qq.com/s/JYFC9YjRwr5U58PF5_iBuQ</link>
+            <guid>https://mp.weixin.qq.com/s/JYFC9YjRwr5U58PF5_iBuQ</guid>
+            <pubDate>Mon, 16 Mar 2026 05:50:44 GMT</pubDate>
+            <enclosure url="https://mmbiz.qpic.cn/sz_mmbiz_jpg/hUXFE0V8faziaFkLTUJQ6tHBicv826icmeel8byYRnJYBvhpkeh6oJIfSaG91iaPIM9aicUV6DIdvryjic6U2qnR5xFR7ZnKOwOmsOKicDOrRQiatjA/0?wx_fmt=jpeg" length="0" type="image//sz_mmbiz_jpg/hUXFE0V8faziaFkLTUJQ6tHBicv826icmeel8byYRnJYBvhpkeh6oJIfSaG91iaPIM9aicUV6DIdvryjic6U2qnR5xFR7ZnKOwOmsOKicDOrRQiatjA/0"/>
+        </item>
+    </channel>
+</rss>

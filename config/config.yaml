@@ -142,9 +142,19 @@ rss:
     # 微信公众号 GIS/RS 源（通过本地 WeWe RSS 服务转发）
     # ──────────────────────────────────────────────────────────
 
-    - id: "wechat-gis"
-      name: "微信公众号 - GIS/遥感"
-      url: "${WECHAT_RSS_URL}/feeds/all.rss"
+    - id: "wechat-diyanlian"
+      name: "地研联"
+      url: "${WECHAT_RSS_URL}/feeds/MP_WXS_3901345172.rss"
+      max_age_days: 3
+
+    - id: "wechat-malagis"
+      name: "麻辣GIS"
+      url: "${WECHAT_RSS_URL}/feeds/MP_WXS_2394767200.rss"
+      max_age_days: 3
+
+    - id: "wechat-gisqianyan"
+      name: "GIS前沿"
+      url: "${WECHAT_RSS_URL}/feeds/MP_WXS_3015957868.rss"
       max_age_days: 3
 
     # ──────────────────────────────────────────────────────────

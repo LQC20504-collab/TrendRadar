@@ -7,12 +7,17 @@ SQLite 存储 Mixin
 
 import sqlite3
 from abc import abstractmethod
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 from trendradar.storage.base import NewsItem, NewsData, RSSItem, RSSData
 from trendradar.utils.url import normalize_url
+
+
+# RSS 去重回溯天数：新一天首次抓取时，向前回溯最近 N 天的数据库文件（按天分文件存储），
+# 避免把前几天已推送过的文章重复判定为新增（默认 max_age_days=3，取 7 天留足余量）
+RSS_DEDUP_LOOKBACK_DAYS = 7
 
 
 class SQLiteStorageMixin:
@@ -861,10 +866,13 @@ class SQLiteStorageMixin:
                             existing = cursor.fetchone()
 
                         if not existing and item.url:
+                            # URL 全局唯一去重（不区分 feed_id）：
+                            # 同一 URL 可能被多个 feed 同时推送（如 ESA 官网源与 ESA 新闻源），
+                            # 此处仅按 URL 判断是否已存在，保证一条 URL 只入库一次
                             cursor.execute("""
                                 SELECT id, title FROM rss_items
-                                WHERE url = ? AND feed_id = ?
-                            """, (item.url, feed_id))
+                                WHERE url = ?
+                            """, (item.url,))
                             existing = cursor.fetchone()
 
                         if existing:
@@ -1048,6 +1056,12 @@ class SQLiteStorageMixin:
         该方法比较当前抓取数据与历史数据，找出新增的 RSS 条目。
         关键逻辑：只有在历史批次中从未出现过的 URL 才算新增。
 
+        去重范围（双向扩展）：
+        - 跨天：回溯最近 RSS_DEDUP_LOOKBACK_DAYS 天的数据库文件，避免新一天
+          首次抓取时把前几天已推送过的文章重复判定为新增。
+        - 跨源：URL 全局去重（不区分 feed_id），同一 URL 即使被多个 feed
+          同时携带，也只判定为一次新增。
+
         Args:
             current_data: 当前抓取的 RSS 数据
 
@@ -1055,42 +1069,60 @@ class SQLiteStorageMixin:
             新增的 RSS 条目 {feed_id: [RSSItem, ...]}
         """
         try:
-            # 获取历史数据
-            historical_data = self._get_rss_data_impl(current_data.date)
-
-            if not historical_data:
-                # 没有历史数据，所有都是新的
-                return current_data.items.copy()
-
             # 获取当前批次时间
             current_time = current_data.crawl_time
 
-            # 收集历史 URL（first_time < current_time 的条目）
-            historical_urls: Dict[str, set] = {}
-            for feed_id, rss_list in historical_data.items.items():
-                historical_urls[feed_id] = set()
-                for item in rss_list:
-                    first_time = item.first_time or item.crawl_time
-                    if first_time < current_time:
-                        if item.url:
-                            historical_urls[feed_id].add(item.url)
+            # 全局已见 URL 集合（跨天 + 跨源统一去重，不再按 feed_id 分桶）
+            seen_urls: set = set()
 
-            # 检查是否有早于当前批次的历史数据
-            has_historical_data = any(len(urls) > 0 for urls in historical_urls.values())
-            if not has_historical_data:
-                # 当天第一次抓取，所有条目都是新增
-                return current_data.items.copy()
+            # 回溯最近若干天的数据库文件，收集历史已出现的 URL。
+            # 存储按天分文件（output/rss/{YYYY-MM-DD}.db），先检查文件是否存在，
+            # 避免读取操作在 output/rss/ 下为不存在的历史日期创建空的 .db 文件
+            try:
+                current_date = datetime.strptime(current_data.date, "%Y-%m-%d")
+            except (ValueError, TypeError):
+                current_date = None
 
-            # 检测新增
+            if current_date is not None:
+                for offset in range(RSS_DEDUP_LOOKBACK_DAYS):
+                    day_str = (current_date - timedelta(days=offset)).strftime("%Y-%m-%d")
+                    if hasattr(self, "_get_db_path"):
+                        # 本地后端：直接检查磁盘上的数据库文件是否存在
+                        if not self._get_db_path(day_str, db_type="rss").exists():
+                            continue
+                    elif hasattr(self, "_check_object_exists") and hasattr(self, "_get_remote_db_key"):
+                        # 远程后端：检查远程存储中该日期的数据库对象是否存在
+                        if not self._check_object_exists(self._get_remote_db_key(day_str, db_type="rss")):
+                            continue
+                    else:
+                        continue
+
+                    historical_data = self._get_rss_data_impl(day_str)
+                    if not historical_data:
+                        continue
+                    for _feed_id, rss_list in historical_data.items.items():
+                        for item in rss_list:
+                            first_time = item.first_time or item.crawl_time
+                            # 只统计早于当前批次的历史条目（first_time < current_time）
+                            if first_time < current_time:
+                                if item.url:
+                                    seen_urls.add(item.url)
+
+            # 检测新增：item 的 URL 未出现在任何历史批次中才算新增。
+            # 首个 feed 判定为新增后立即把 URL 加入全局集合，
+            # 同一批次内相同 URL 出现在多个 feed 时只在第一个 feed 下保留
             new_items: Dict[str, List[RSSItem]] = {}
             for feed_id, rss_list in current_data.items.items():
-                hist_set = historical_urls.get(feed_id, set())
                 for item in rss_list:
-                    # 通过 URL 判断是否新增
-                    if item.url and item.url not in hist_set:
-                        if feed_id not in new_items:
-                            new_items[feed_id] = []
-                        new_items[feed_id].append(item)
+                    # 无 URL 的条目无法去重，直接跳过（与旧逻辑一致）
+                    if not item.url:
+                        continue
+                    if item.url in seen_urls:
+                        continue
+                    seen_urls.add(item.url)
+                    if feed_id not in new_items:
+                        new_items[feed_id] = []
+                    new_items[feed_id].append(item)
 
             return new_items
 

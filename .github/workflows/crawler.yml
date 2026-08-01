@@ -140,14 +140,14 @@ jobs:
         env:
           WECHAT_RSS_URL: ${{ secrets.WECHAT_RSS_URL }}
         run: |
-          if [ -f feeds/all.rss ]; then
+          if ls feeds/*.rss >/dev/null 2>&1; then
             # 推送式架构：仓库内 RSS 文件优先，起临时 HTTP server 供 fetcher 抓取（零隧道、零 Secret）
             nohup python -m http.server 9000 --directory "$GITHUB_WORKSPACE" > /tmp/http-server.log 2>&1 &
             echo $! > /tmp/http-server.pid
             sleep 2
             if curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:9000/feeds/all.rss | grep -q 200; then
               sed -i "s|\${WECHAT_RSS_URL}|http://127.0.0.1:9000|g" config/config.yaml
-              echo "✅ WeChat RSS served from repo file (feeds/all.rss) via local http.server"
+              echo "✅ WeChat RSS served from repo files (feeds/*.rss) via local http.server"
             else
               echo "⚠️ http.server failed to serve feeds/all.rss, wechat-gis source will fail"
             fi

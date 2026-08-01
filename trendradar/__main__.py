@@ -8,6 +8,7 @@ TrendRadar 主程序
 
 import argparse
 import os
+import sys
 import webbrowser
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
@@ -1638,6 +1639,14 @@ class NewsAnalyzer:
 
 def main():
     """主程序入口"""
+    # Windows 控制台默认 GBK 编码无法输出 ✅/❌ 等 emoji，会抛 UnicodeEncodeError；
+    # 统一把 stdout/stderr 重配置为 UTF-8（errors="replace" 兜底），保证 GBK 终端不崩溃、UTF-8 终端正常显示 emoji。
+    try:
+        if sys.platform == "win32":
+            sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+            sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
     parser = argparse.ArgumentParser(
         description="TrendRadar - 热点新闻聚合与分析工具",
         formatter_class=argparse.RawDescriptionHelpFormatter,

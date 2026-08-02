@@ -1103,8 +1103,11 @@ class SQLiteStorageMixin:
                     for _feed_id, rss_list in historical_data.items.items():
                         for item in rss_list:
                             first_time = item.first_time or item.crawl_time
-                            # 只统计早于当前批次的历史条目（first_time < current_time）
-                            if first_time < current_time:
+                            # 组合 日期+时间 比较，避免跨午夜时 "HH:MM" 字符串比较失效
+                            # （例如 前一天 23:20 的条目会被误判为晚于 当天 00:37，导致历史去重全部失效）
+                            hist_dt = f"{day_str} {first_time}"
+                            cur_dt = f"{current_data.date} {current_time}"
+                            if hist_dt < cur_dt:
                                 if item.url:
                                     seen_urls.add(item.url)
 

@@ -275,6 +275,31 @@ rss:
       url: "https://blog.research.google/feed"
       max_age_days: 3
 
+    # ──────────────────────────────────────────────────────────
+    # GIS/RS 专业期刊（英文顶刊，ScienceDirect / Taylor & Francis 官方 RSS）
+    # 2026-08-13 新增；max_age_days=2 控制初始同步量，避免首次大灌水
+    # ──────────────────────────────────────────────────────────
+
+    - id: "j-remote-sensing-env"
+      name: "Remote Sensing of Environment (RSE)"
+      url: "https://rss.sciencedirect.com/publication/science/00344257"
+      max_age_days: 2
+
+    - id: "j-isprs-jprs"
+      name: "ISPRS J. Photogrammetry & Remote Sensing"
+      url: "https://rss.sciencedirect.com/publication/science/09242716"
+      max_age_days: 2
+
+    - id: "j-giscience-rs"
+      name: "GIScience & Remote Sensing"
+      url: "https://www.tandfonline.com/action/showFeed?type=etoc&feed=rss&jc=tgrs20"
+      max_age_days: 2
+
+    - id: "j-int-remote-sensing"
+      name: "International Journal of Remote Sensing"
+      url: "https://www.tandfonline.com/action/showFeed?type=etoc&feed=rss&jc=tres20"
+      max_age_days: 2
+
     # 自定义源示例
     # - id: "custom-feed"
     #   name: "自定义源"

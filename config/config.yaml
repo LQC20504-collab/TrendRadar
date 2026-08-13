@@ -290,14 +290,14 @@ rss:
       url: "https://rss.sciencedirect.com/publication/science/09242716"
       max_age_days: 2
 
-    - id: "j-giscience-rs"
-      name: "GIScience & Remote Sensing"
-      url: "https://www.tandfonline.com/action/showFeed?type=etoc&feed=rss&jc=tgrs20"
+    - id: "j-rs-applications"
+      name: "Remote Sensing Applications: Society & Environment"
+      url: "https://rss.sciencedirect.com/publication/science/23529385"
       max_age_days: 2
 
-    - id: "j-int-remote-sensing"
-      name: "International Journal of Remote Sensing"
-      url: "https://www.tandfonline.com/action/showFeed?type=etoc&feed=rss&jc=tres20"
+    - id: "j-computers-geosciences"
+      name: "Computers & Geosciences"
+      url: "https://rss.sciencedirect.com/publication/science/00983004"
       max_age_days: 2
 
     # 自定义源示例

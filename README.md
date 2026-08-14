@@ -15,6 +15,17 @@
 
 </div>
 
+## 📢 订阅与网页版
+
+本定制版提供三种订阅 / 查看方式：
+
+- **网页版报告**：每次运行自动部署 → [https://lqc20504-collab.github.io/TrendRadar/](https://lqc20504-collab.github.io/TrendRadar/)
+- **飞书群**（每日推送）：扫码加入
+
+  <p align="center"><img src="docs/飞书群二维码.png" alt="飞书群二维码" width="240"></p>
+
+- **ntfy 频道**：`gis-trendradar-1567-33643`（手机安装 [ntfy](https://ntfy.sh) App 后订阅即可接收推送）
+
 ---
 
 ## ✨ 本项目定制内容
@@ -45,7 +56,7 @@
 
 > ⚠️ 与上游相同的注意事项：
 > - GitHub Actions 每次运行都是全新环境，不配置云存储将运行在轻量模式（无增量推送、无历史追踪）
-> - 需定期手动运行 **Check In** workflow 续期（有效期 7 天）
+> - 由于 GitHub 平台定时触发（cron）不稳定，推送请手动触发 workflow（`gh workflow run crawler.yml` 或运行 `trigger-push.ps1`）
 > - webhook / Token 等敏感信息请放入 GitHub Secrets，不要写进 `config.yaml`
 
 ### Ⓑ Docker 部署

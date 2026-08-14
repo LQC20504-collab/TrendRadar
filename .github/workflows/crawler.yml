@@ -144,11 +144,25 @@ jobs:
       # 首次使用需在仓库 Settings → Pages → Source 选择 "GitHub Actions"（只需一次）。
       # 访问地址：https://<owner>.github.io/<repo>/
       # --------------------------------------------------------------------------------
+      - name: Prepare GitHub Pages site
+        if: success()
+        run: |
+          mkdir -p site
+          if [ -f index.html ]; then
+            cp index.html site/index.html
+          elif [ -f output/index.html ]; then
+            cp output/index.html site/index.html
+          else
+            echo "❌ 未找到 index.html（根目录或 output/），跳过 Pages 部署"
+            exit 1
+          fi
+          echo "✅ site/index.html 就绪 ($(stat -c%s site/index.html) bytes)"
+
       - name: Upload GitHub Pages artifact
         if: success()
         uses: actions/upload-pages-artifact@v3
         with:
-          path: index.html
+          path: site
 
       - name: Deploy to GitHub Pages
         if: success()

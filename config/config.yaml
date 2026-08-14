@@ -549,7 +549,8 @@ ai:
 
   timeout: 120                      # 请求超时（秒）
 
-  temperature: 1.0                  # 采样温度 (0.0-2.0)
+  temperature: 0.7                  # 采样温度 (0.0-2.0)
+                                    # 0.7：更贴材料、更少发散（2026-08-14 调低，增强分析内容与推文的关联）
                                     # 注意：部分模型(如 gpt-5)可能要求必须为 1.0，否则会报错
   
   max_tokens: 5000                  # 最大生成 token 数
@@ -574,7 +575,7 @@ ai_analysis:
                                     # 开启 schedule 后此项仍为总开关：false=永远不分析，true=由调度控制
 
   language: "Chinese"               # 分析报告语言（如 "English", "Korean", "法语"）
-  prompt_file: "ai_analysis_prompt.txt"   # 提示词文件（相对于 config 目录）
+  prompt_file: "ai_analysis_rss_prompt.txt"   # 提示词文件（相对于 config 目录）——RSS 专属版，分析锚定具体文章
 
   mode: "follow_report"             # AI 分析模式（可独立于 report.mode）
                                     # follow_report = 跟随 report.mode（默认）

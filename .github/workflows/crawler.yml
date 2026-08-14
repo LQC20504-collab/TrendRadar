@@ -24,6 +24,8 @@ concurrency:
 permissions:
   contents: read
   actions: write
+  pages: write
+  id-token: write
 
 jobs:
   crawl:
@@ -134,6 +136,25 @@ jobs:
           S3_REGION: ${{ secrets.S3_REGION }}
           GITHUB_ACTIONS: true
         run: uv run python -m trendradar
+
+      # --------------------------------------------------------------------------------
+      # 🚀 GITHUB PAGES DEPLOY / 部署到 GitHub Pages（免费静态网页版）
+      # --------------------------------------------------------------------------------
+      # 将爬虫生成的 index.html（报告入口）部署到 GitHub Pages。
+      # 首次使用需在仓库 Settings → Pages → Source 选择 "GitHub Actions"（只需一次）。
+      # 访问地址：https://<owner>.github.io/<repo>/
+      # --------------------------------------------------------------------------------
+      - name: Upload GitHub Pages artifact
+        if: success()
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: index.html
+
+      - name: Deploy to GitHub Pages
+        if: success()
+        id: deployment
+        continue-on-error: true   # 未在 Settings→Pages 开启 "GitHub Actions" 源时失败不阻断运行
+        uses: actions/deploy-pages@v4
 
       # --------------------------------------------------------------------------------
       # ☁️ CLOUDFLARE PAGES DEPLOY / 部署到 Cloudflare Pages（可选）

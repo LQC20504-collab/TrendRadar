@@ -4,7 +4,7 @@
         <title>WeWe-RSS All</title>
         <link>https://legacy-boards-them-campaigns.trycloudflare.com/feeds/all.rss</link>
         <description>WeWe-RSS 全部文章</description>
-        <lastBuildDate>Sat, 15 Aug 2026 12:36:22 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 16 Aug 2026 14:11:13 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>WeWe-RSS</generator>
         <language>zh-cn</language>
@@ -13,6 +13,48 @@
             <url>https://legacy-boards-them-campaigns.trycloudflare.com/favicon.ico</url>
             <link>https://legacy-boards-them-campaigns.trycloudflare.com/feeds/all.rss</link>
         </image>
+        <item>
+            <title><![CDATA[为什么一定要学 ArcGIS Pro？ 新一代 GIS 主流软件]]></title>
+            <link>https://mp.weixin.qq.com/s/XpVRRFwF7JguuDZj4pEhOw</link>
+            <guid>https://mp.weixin.qq.com/s/XpVRRFwF7JguuDZj4pEhOw</guid>
+            <pubDate>Sun, 16 Aug 2026 13:03:55 GMT</pubDate>
+            <enclosure url="https://mmbiz.qpic.cn/mmbiz_jpg/IsIB1WDkZxtCQ0rq3s20DPEOSLTsUgIl2qWCWOesB0TReVvheJGvOB2WDc8iajCqlTKNxMm6wHrC3xq0J2FTibfu3R31bg02Xe8ArFNnOn7l4/0?wx_fmt=jpeg" length="0" type="image//mmbiz_jpg/IsIB1WDkZxtCQ0rq3s20DPEOSLTsUgIl2qWCWOesB0TReVvheJGvOB2WDc8iajCqlTKNxMm6wHrC3xq0J2FTibfu3R31bg02Xe8ArFNnOn7l4/0"/>
+        </item>
+        <item>
+            <title><![CDATA[四大院士聚首2026地理信息技术创新大会 解锁时空智能与AI前沿变革]]></title>
+            <link>https://mp.weixin.qq.com/s/1gj5xrCmFXp2J-9Om0JqnQ</link>
+            <guid>https://mp.weixin.qq.com/s/1gj5xrCmFXp2J-9Om0JqnQ</guid>
+            <pubDate>Sun, 16 Aug 2026 01:01:48 GMT</pubDate>
+            <enclosure url="https://mmbiz.qpic.cn/mmbiz_jpg/4um7VHZGdDkJL3EOlw9UYm23q4Zfnys4BhopbUSSb5f8PWtBteiaGRQg6hoBX1Z7ALIEE1iatibwzShArGAxTBdHEl8CzFo159K2Pra27bhQBQ/0?wx_fmt=jpeg" length="0" type="image//mmbiz_jpg/4um7VHZGdDkJL3EOlw9UYm23q4Zfnys4BhopbUSSb5f8PWtBteiaGRQg6hoBX1Z7ALIEE1iatibwzShArGAxTBdHEl8CzFo159K2Pra27bhQBQ/0"/>
+        </item>
+        <item>
+            <title><![CDATA[地质地震 GIS必备，CN-block中国大陆及周边活动地块矢量数据]]></title>
+            <link>https://mp.weixin.qq.com/s/GGopoKwZYJks7ATDXnOyxA</link>
+            <guid>https://mp.weixin.qq.com/s/GGopoKwZYJks7ATDXnOyxA</guid>
+            <pubDate>Sat, 15 Aug 2026 23:03:08 GMT</pubDate>
+            <enclosure url="https://mmbiz.qpic.cn/mmbiz_jpg/0MYvDY87VUKXzF04NoIGNE8DZNlFESdyQwdud6tdSuc7AlaExnibEdpC7XM8M7VOU8eLtmSFGB3qxNHcgysHhzibibtIXvUYOvQY7EPBV4YY68/0?wx_fmt=jpeg" length="0" type="image//mmbiz_jpg/0MYvDY87VUKXzF04NoIGNE8DZNlFESdyQwdud6tdSuc7AlaExnibEdpC7XM8M7VOU8eLtmSFGB3qxNHcgysHhzibibtIXvUYOvQY7EPBV4YY68/0"/>
+        </item>
+        <item>
+            <title><![CDATA[微图4从入门到实战（60）：如何下载高程并提取5米等高线]]></title>
+            <link>https://mp.weixin.qq.com/s/csa2dUSoiARtJeMq4b_A0A</link>
+            <guid>https://mp.weixin.qq.com/s/csa2dUSoiARtJeMq4b_A0A</guid>
+            <pubDate>Sat, 15 Aug 2026 23:03:08 GMT</pubDate>
+            <enclosure url="https://mmbiz.qpic.cn/mmbiz_jpg/0MYvDY87VUK47389vI3j0Dk9xHOEibWKueicbUnLrggRrdqqNjHJWqdFAbrC11TPpK3g5DXmYsltiaAuCp1aqDUwz6vDU447NI0Ea1UHa9nE04/0?wx_fmt=jpeg" length="0" type="image//mmbiz_jpg/0MYvDY87VUK47389vI3j0Dk9xHOEibWKueicbUnLrggRrdqqNjHJWqdFAbrC11TPpK3g5DXmYsltiaAuCp1aqDUwz6vDU447NI0Ea1UHa9nE04/0"/>
+        </item>
+        <item>
+            <title><![CDATA[连载|《水经注》卷十：浊漳水、清漳水（12）]]></title>
+            <link>https://mp.weixin.qq.com/s/51ns38ADF1UR3P-yeDn6mQ</link>
+            <guid>https://mp.weixin.qq.com/s/51ns38ADF1UR3P-yeDn6mQ</guid>
+            <pubDate>Sat, 15 Aug 2026 23:03:08 GMT</pubDate>
+            <enclosure url="https://mmbiz.qpic.cn/mmbiz_jpg/tCoicJSjRDSAdw5TkwgXttYmWfuGa5HiarXFDibia5CL0qB2wSLGTicEaqPNNkMiciaLmMVlwqUq1M6pNpXXfiavEvwNYg/0?wx_fmt=jpeg" length="0" type="image//mmbiz_jpg/tCoicJSjRDSAdw5TkwgXttYmWfuGa5HiarXFDibia5CL0qB2wSLGTicEaqPNNkMiciaLmMVlwqUq1M6pNpXXfiavEvwNYg/0"/>
+        </item>
+        <item>
+            <title><![CDATA[高清卫星影像免费下载|每日分享]]></title>
+            <link>https://mp.weixin.qq.com/s/4BRcGmSRxTzaL71a79dvew</link>
+            <guid>https://mp.weixin.qq.com/s/4BRcGmSRxTzaL71a79dvew</guid>
+            <pubDate>Sat, 15 Aug 2026 23:03:08 GMT</pubDate>
+            <enclosure url="https://mmbiz.qpic.cn/mmbiz_jpg/0MYvDY87VUINnX04JlHCoc0mkvL1gIwI6N13kVxiagL9HrUTpBNENibw0HhrdPRwEpicjXhmQLvjzbnJtvY2QFEetoT1whXMVJsYjWas6P2DnQ/0?wx_fmt=jpeg" length="0" type="image//mmbiz_jpg/0MYvDY87VUINnX04JlHCoc0mkvL1gIwI6N13kVxiagL9HrUTpBNENibw0HhrdPRwEpicjXhmQLvjzbnJtvY2QFEetoT1whXMVJsYjWas6P2DnQ/0"/>
+        </item>
         <item>
             <title><![CDATA[通知丨2026年光学与雷达遥感应用培训班—嘉兴站]]></title>
             <link>https://mp.weixin.qq.com/s/kpkBFXXqTyDCdX1oqH1zEA</link>
@@ -84,6 +126,48 @@
             <enclosure url="https://mmbiz.qpic.cn/sz_mmbiz_jpg/AibAh586jTCHeib5ticSibbK4BLXXOUO3F85bHNFf99Yf4rttkZqTLlXOsfkibjibnichic9HASbmbJht91twZYiatb7M6UQYSjqU4n2CJMQW40uBicDE/0?wx_fmt=jpeg" length="0" type="image//sz_mmbiz_jpg/AibAh586jTCHeib5ticSibbK4BLXXOUO3F85bHNFf99Yf4rttkZqTLlXOsfkibjibnichic9HASbmbJht91twZYiatb7M6UQYSjqU4n2CJMQW40uBicDE/0"/>
         </item>
         <item>
+            <title><![CDATA[中国极端高温热浪人口暴露数据集分享]]></title>
+            <link>https://mp.weixin.qq.com/s/-XmXtzJiEYZm2_v8qDRq0g</link>
+            <guid>https://mp.weixin.qq.com/s/-XmXtzJiEYZm2_v8qDRq0g</guid>
+            <pubDate>Fri, 14 Aug 2026 23:02:30 GMT</pubDate>
+            <enclosure url="https://mmbiz.qpic.cn/mmbiz_jpg/0MYvDY87VUIT4GKKQV56TE21e0943bPq6TSdkMkVJMc3icwtjdMQCoicPyXRTscHhmV9icrpk06IQjR9BjDYAs2MKlf3w4Gibt2iaC9qD1aicVfUY/0?wx_fmt=jpeg" length="0" type="image//mmbiz_jpg/0MYvDY87VUIT4GKKQV56TE21e0943bPq6TSdkMkVJMc3icwtjdMQCoicPyXRTscHhmV9icrpk06IQjR9BjDYAs2MKlf3w4Gibt2iaC9qD1aicVfUY/0"/>
+        </item>
+        <item>
+            <title><![CDATA[ArcGIS Pro 从入门到实战基础篇（71）：影像菜单功能]]></title>
+            <link>https://mp.weixin.qq.com/s/jxYImv0XWl2LAdJ4oQm3Ug</link>
+            <guid>https://mp.weixin.qq.com/s/jxYImv0XWl2LAdJ4oQm3Ug</guid>
+            <pubDate>Fri, 14 Aug 2026 23:02:30 GMT</pubDate>
+            <enclosure url="https://mmbiz.qpic.cn/mmbiz_jpg/0MYvDY87VUJmicHQswpjm2z0Kd0qJ6fAmKicDljTc4LpwBshbM48c3Y4xlQtSdDGqMWoZn2A8FH7Zrukt2ibYzYdhK6Ec5Fa6l9icaf20ezhVW8/0?wx_fmt=jpeg" length="0" type="image//mmbiz_jpg/0MYvDY87VUJmicHQswpjm2z0Kd0qJ6fAmKicDljTc4LpwBshbM48c3Y4xlQtSdDGqMWoZn2A8FH7Zrukt2ibYzYdhK6Ec5Fa6l9icaf20ezhVW8/0"/>
+        </item>
+        <item>
+            <title><![CDATA[高清卫星影像免费下载|每日分享]]></title>
+            <link>https://mp.weixin.qq.com/s/FDYeydnCTRvQSIgQV_KqfQ</link>
+            <guid>https://mp.weixin.qq.com/s/FDYeydnCTRvQSIgQV_KqfQ</guid>
+            <pubDate>Fri, 14 Aug 2026 23:02:30 GMT</pubDate>
+            <enclosure url="https://mmbiz.qpic.cn/sz_mmbiz_jpg/0MYvDY87VUIjqooyAktvwt6ibmibhPIpwWiaicImag1z1Uuhaibyj7mpky2iaLicddsUicd5jv36MricM0SJnOG5wONZuia0sz9TcYG0hxaFIVUYDib4NU/0?wx_fmt=jpeg" length="0" type="image//sz_mmbiz_jpg/0MYvDY87VUIjqooyAktvwt6ibmibhPIpwWiaicImag1z1Uuhaibyj7mpky2iaLicddsUicd5jv36MricM0SJnOG5wONZuia0sz9TcYG0hxaFIVUYDib4NU/0"/>
+        </item>
+        <item>
+            <title><![CDATA[会议通知 | 2026年中国地理学会（西南地区）学术年会通知（第二号）]]></title>
+            <link>https://mp.weixin.qq.com/s/gQ8PgKns5x9m9LXKm5Zd2w</link>
+            <guid>https://mp.weixin.qq.com/s/gQ8PgKns5x9m9LXKm5Zd2w</guid>
+            <pubDate>Fri, 14 Aug 2026 12:02:33 GMT</pubDate>
+            <enclosure url="https://mmbiz.qpic.cn/sz_mmbiz_jpg/BuRTpNumw2HzCDeSiaMzsiaZ6EC13bbOHibCh6yWib0SFse2y1ORRVx0E8lhBicNBktnDMK3jLP3LnHia7A8anQug0IJFrDspFf8blibu7VTNLdY4E/0?wx_fmt=jpeg" length="0" type="image//sz_mmbiz_jpg/BuRTpNumw2HzCDeSiaMzsiaZ6EC13bbOHibCh6yWib0SFse2y1ORRVx0E8lhBicNBktnDMK3jLP3LnHia7A8anQug0IJFrDspFf8blibu7VTNLdY4E/0"/>
+        </item>
+        <item>
+            <title><![CDATA[地理荐书 | 诗意何以栖居在AI？读叶超《迈向生命诗学》]]></title>
+            <link>https://mp.weixin.qq.com/s/4D00bTp1NqfWE_b2L1wfRQ</link>
+            <guid>https://mp.weixin.qq.com/s/4D00bTp1NqfWE_b2L1wfRQ</guid>
+            <pubDate>Fri, 14 Aug 2026 12:02:33 GMT</pubDate>
+            <enclosure url="https://mmbiz.qpic.cn/sz_mmbiz_jpg/BuRTpNumw2F9OCqGuP9985EezXuoibstP4bV94I5wACNNLsxbTt5ZWZvLI73kdWdGhBxCX3PhZ88wF0thJEOGzz2t4gia8hd2ib2Amd7QDuzZw/0?wx_fmt=jpeg" length="0" type="image//sz_mmbiz_jpg/BuRTpNumw2F9OCqGuP9985EezXuoibstP4bV94I5wACNNLsxbTt5ZWZvLI73kdWdGhBxCX3PhZ88wF0thJEOGzz2t4gia8hd2ib2Amd7QDuzZw/0"/>
+        </item>
+        <item>
+            <title><![CDATA[佳文赏析 | “在地化”作为方法论：深化区域国别研究的空间路径]]></title>
+            <link>https://mp.weixin.qq.com/s/LdBvX7-K_lGdr6aY0Qw1zw</link>
+            <guid>https://mp.weixin.qq.com/s/LdBvX7-K_lGdr6aY0Qw1zw</guid>
+            <pubDate>Fri, 14 Aug 2026 12:02:33 GMT</pubDate>
+            <enclosure url="https://mmbiz.qpic.cn/mmbiz_jpg/BuRTpNumw2HBmQbBo7iaAwHa1XmkwwACWdib3JLCPIy7RhPSQd8g3AadGqygkstoScBNibaecSiaRZvwAxVa5sOiaCCmoOSAQb1S2otoN0zA3rl4/0?wx_fmt=jpeg" length="0" type="image//mmbiz_jpg/BuRTpNumw2HBmQbBo7iaAwHa1XmkwwACWdib3JLCPIy7RhPSQd8g3AadGqygkstoScBNibaecSiaRZvwAxVa5sOiaCCmoOSAQb1S2otoN0zA3rl4/0"/>
+        </item>
+        <item>
             <title><![CDATA[人皇幡里做兄弟： 83 亿个"虚拟人"怎么用（中） MatrAIx 是什么【有福利】]]></title>
             <link>https://mp.weixin.qq.com/s/l82LAo7LnZfrfDnn-pM6tg</link>
             <guid>https://mp.weixin.qq.com/s/l82LAo7LnZfrfDnn-pM6tg</guid>
@@ -138,90 +222,6 @@
             <guid>https://mp.weixin.qq.com/s/u995sxEV93T-EnI7ZpwfhA</guid>
             <pubDate>Fri, 14 Aug 2026 06:51:15 GMT</pubDate>
             <enclosure url="https://mmbiz.qpic.cn/mmbiz_jpg/AibAh586jTCEsYWI0iaCHquSxa4iaomE8UnKQnUaoVzv5wYBUXxiaNohFUCy0ycoeNdOYCAViaRE5iaTDg3pF9I3pD4AiaBXQAGE3Np4HLdy29s6TE/0?wx_fmt=jpeg" length="0" type="image//mmbiz_jpg/AibAh586jTCEsYWI0iaCHquSxa4iaomE8UnKQnUaoVzv5wYBUXxiaNohFUCy0ycoeNdOYCAViaRE5iaTDg3pF9I3pD4AiaBXQAGE3Np4HLdy29s6TE/0"/>
-        </item>
-        <item>
-            <title><![CDATA[2026年实景三维数据赋能高质量发展创新应用典型案例征集工作启动]]></title>
-            <link>https://mp.weixin.qq.com/s/DVczy5obNMdnJuYOHLcXYw</link>
-            <guid>https://mp.weixin.qq.com/s/DVczy5obNMdnJuYOHLcXYw</guid>
-            <pubDate>Fri, 14 Aug 2026 06:51:15 GMT</pubDate>
-            <enclosure url="https://mmbiz.qpic.cn/sz_mmbiz_jpg/AibAh586jTCFQibzWMJZ21IdplwAJaH7nYJQoVS9gBef9MHfDwzRyrGDvlPE8LJB1EwPfueLt61AX5VltsibJm1Er1ib5yDXabw4QjoOxgznMSc/0?wx_fmt=jpeg" length="0" type="image//sz_mmbiz_jpg/AibAh586jTCFQibzWMJZ21IdplwAJaH7nYJQoVS9gBef9MHfDwzRyrGDvlPE8LJB1EwPfueLt61AX5VltsibJm1Er1ib5yDXabw4QjoOxgznMSc/0"/>
-        </item>
-        <item>
-            <title><![CDATA[北京市测绘设计研究院：数据驱动与智能治理双书出版]]></title>
-            <link>https://mp.weixin.qq.com/s/7U7cB8Rw8vbM7wHfO39M0A</link>
-            <guid>https://mp.weixin.qq.com/s/7U7cB8Rw8vbM7wHfO39M0A</guid>
-            <pubDate>Fri, 14 Aug 2026 06:51:15 GMT</pubDate>
-            <enclosure url="https://mmbiz.qpic.cn/sz_mmbiz_jpg/AibAh586jTCHNibiaCK8DAq4KZq4dDyVL9dkvW5IiaXf2nJerHrsSE40zLiaNJ5by3bqC9VGzpBMNkPnHnXvAY0OiaAVd0F2pLV05pTibwRMUCCrJg/0?wx_fmt=jpeg" length="0" type="image//sz_mmbiz_jpg/AibAh586jTCHNibiaCK8DAq4KZq4dDyVL9dkvW5IiaXf2nJerHrsSE40zLiaNJ5by3bqC9VGzpBMNkPnHnXvAY0OiaAVd0F2pLV05pTibwRMUCCrJg/0"/>
-        </item>
-        <item>
-            <title><![CDATA[走进重庆丨重庆服务“金名片”⑧ “渝贸全球”推动重庆企业“抱团”闯出新蓝海]]></title>
-            <link>https://mp.weixin.qq.com/s/wRMLGlRuUClvn9LvTQ94cg</link>
-            <guid>https://mp.weixin.qq.com/s/wRMLGlRuUClvn9LvTQ94cg</guid>
-            <pubDate>Fri, 14 Aug 2026 06:51:15 GMT</pubDate>
-            <enclosure url="https://mmbiz.qpic.cn/mmbiz_jpg/AibAh586jTCH2N9QXyIGxJyaxC4sNBFAaeKZ68ibUQlRF4rMl9mhSI1Py9hpmN1S80MhL22lr25IlRQkAhdJL1xu9Gq4qZOLN9nRtXkFeSfdA/0?wx_fmt=jpeg" length="0" type="image//mmbiz_jpg/AibAh586jTCH2N9QXyIGxJyaxC4sNBFAaeKZ68ibUQlRF4rMl9mhSI1Py9hpmN1S80MhL22lr25IlRQkAhdJL1xu9Gq4qZOLN9nRtXkFeSfdA/0"/>
-        </item>
-        <item>
-            <title><![CDATA[会议手册 | 第九届中国树木年轮学大会]]></title>
-            <link>https://mp.weixin.qq.com/s/6R0ShEPXQmrJE-wdcqe6cw</link>
-            <guid>https://mp.weixin.qq.com/s/6R0ShEPXQmrJE-wdcqe6cw</guid>
-            <pubDate>Fri, 14 Aug 2026 05:45:11 GMT</pubDate>
-            <enclosure url="https://mmbiz.qpic.cn/mmbiz_jpg/lVHDLSLhKvN40wddfcicpqFSAFEGicakibhBORwL2CR0uUbxkePvNdDjmyO7KJWGJ23nuPFpOsldrjBqTH4MBuT9icp8ibt4RLF79PmNJEPjFtsE/0?wx_fmt=jpeg" length="0" type="image//mmbiz_jpg/lVHDLSLhKvN40wddfcicpqFSAFEGicakibhBORwL2CR0uUbxkePvNdDjmyO7KJWGJ23nuPFpOsldrjBqTH4MBuT9icp8ibt4RLF79PmNJEPjFtsE/0"/>
-        </item>
-        <item>
-            <title><![CDATA[刘惠冉，等 | 中国与境外经济体绿地投资联系水平测度及其空间差异分析]]></title>
-            <link>https://mp.weixin.qq.com/s/-2IsYve6hn9Y_pPKubRRGw</link>
-            <guid>https://mp.weixin.qq.com/s/-2IsYve6hn9Y_pPKubRRGw</guid>
-            <pubDate>Fri, 14 Aug 2026 03:33:46 GMT</pubDate>
-            <enclosure url="https://mmbiz.qpic.cn/sz_mmbiz_jpg/aU274wUpDmDJVo5r74mIExN8TMGbOu40XRCcJY6IwicpMN5Rczu780Vlckv2JhflicicVpic5YFGYzAfhqicrKFboicuiaBz3cCnktFknJtkE5VP8E/0?wx_fmt=jpeg" length="0" type="image//sz_mmbiz_jpg/aU274wUpDmDJVo5r74mIExN8TMGbOu40XRCcJY6IwicpMN5Rczu780Vlckv2JhflicicVpic5YFGYzAfhqicrKFboicuiaBz3cCnktFknJtkE5VP8E/0"/>
-        </item>
-        <item>
-            <title><![CDATA[会议预告丨第十届全国成像光谱对地观测学术研讨会（第十六届成像光谱技术与应用研讨会暨交叉学科论坛）(二号通知)]]></title>
-            <link>https://mp.weixin.qq.com/s/D9BWCKdUc0XgkmXCHPYNoA</link>
-            <guid>https://mp.weixin.qq.com/s/D9BWCKdUc0XgkmXCHPYNoA</guid>
-            <pubDate>Fri, 14 Aug 2026 02:38:46 GMT</pubDate>
-            <enclosure url="https://mmbiz.qpic.cn/mmbiz_jpg/wjWG51kKEo1G2GhA9m2XrtWre67vL5Gr6k5WxU7N4PISEdyn3eyStkhoE6IZzP7Ut7Xqnf87SnTicBwW2wCia0meHjy1lIVj3lUm8pyMcCknc/0?wx_fmt=jpeg" length="0" type="image//mmbiz_jpg/wjWG51kKEo1G2GhA9m2XrtWre67vL5Gr6k5WxU7N4PISEdyn3eyStkhoE6IZzP7Ut7Xqnf87SnTicBwW2wCia0meHjy1lIVj3lUm8pyMcCknc/0"/>
-        </item>
-        <item>
-            <title><![CDATA[央视新闻：北斗，就在你我身边]]></title>
-            <link>https://mp.weixin.qq.com/s/a-OhdKErRvaTbL9l7uUe-Q</link>
-            <guid>https://mp.weixin.qq.com/s/a-OhdKErRvaTbL9l7uUe-Q</guid>
-            <pubDate>Fri, 14 Aug 2026 00:02:41 GMT</pubDate>
-            <enclosure url="https://mmbiz.qpic.cn/sz_mmbiz_jpg/OcibJCmiavIHPXT7ZZoR3CT7reI7YRmQhcVl4ZHSaXxqjbRfv3jTWGYRJEU0McxqdPcYbRTZFPFmKsZpN7Qp3fiawlmLqKpVjrW64ib4jSiaQyHA/0?wx_fmt=jpeg" length="0" type="image//sz_mmbiz_jpg/OcibJCmiavIHPXT7ZZoR3CT7reI7YRmQhcVl4ZHSaXxqjbRfv3jTWGYRJEU0McxqdPcYbRTZFPFmKsZpN7Qp3fiawlmLqKpVjrW64ib4jSiaQyHA/0"/>
-        </item>
-        <item>
-            <title><![CDATA[从遥感卫星到智能卫星：中国商业航天的新方向]]></title>
-            <link>https://mp.weixin.qq.com/s/2nF7eOZb1ROWHoFe7uuD0g</link>
-            <guid>https://mp.weixin.qq.com/s/2nF7eOZb1ROWHoFe7uuD0g</guid>
-            <pubDate>Fri, 14 Aug 2026 00:02:41 GMT</pubDate>
-            <enclosure url="https://mmbiz.qpic.cn/mmbiz_jpg/OcibJCmiavIHOJHdXCjNDlOLib2P7oRS6IcWDNSJic5HPyOicXQw5WQ2OLfUNpnP9wdCYtcyban49KoicuUXS8Nga3GpYQU62MaxcQ8rfbjqTqbng/0?wx_fmt=jpeg" length="0" type="image//mmbiz_jpg/OcibJCmiavIHOJHdXCjNDlOLib2P7oRS6IcWDNSJic5HPyOicXQw5WQ2OLfUNpnP9wdCYtcyban49KoicuUXS8Nga3GpYQU62MaxcQ8rfbjqTqbng/0"/>
-        </item>
-        <item>
-            <title><![CDATA[同济大学许雄：面向卓越工程能力培养的空间数据处理“实训-竞赛-科研”育人途径改革与实践]]></title>
-            <link>https://mp.weixin.qq.com/s/-slYvwGVDKqZ6BKstOmIIQ</link>
-            <guid>https://mp.weixin.qq.com/s/-slYvwGVDKqZ6BKstOmIIQ</guid>
-            <pubDate>Fri, 14 Aug 2026 00:02:41 GMT</pubDate>
-            <enclosure url="https://mmbiz.qpic.cn/mmbiz_jpg/OcibJCmiavIHOVU2bZJx1HyZFJriaIDzOkZfnE1ibQTbRjIkAxyS476ia3TiaIZgIVQ80JtmYZnXjYJByLAFbzWhgjceqfs8CD88usn9xVWoKzObU/0?wx_fmt=jpeg" length="0" type="image//mmbiz_jpg/OcibJCmiavIHOVU2bZJx1HyZFJriaIDzOkZfnE1ibQTbRjIkAxyS476ia3TiaIZgIVQ80JtmYZnXjYJByLAFbzWhgjceqfs8CD88usn9xVWoKzObU/0"/>
-        </item>
-        <item>
-            <title><![CDATA[会议通知 | 第二十八届生态环境遥感论坛第二号通知]]></title>
-            <link>https://mp.weixin.qq.com/s/fXSHXc6lDtT4awVEego-Zw</link>
-            <guid>https://mp.weixin.qq.com/s/fXSHXc6lDtT4awVEego-Zw</guid>
-            <pubDate>Fri, 14 Aug 2026 00:02:41 GMT</pubDate>
-            <enclosure url="https://mmbiz.qpic.cn/mmbiz_jpg/OcibJCmiavIHPRRQDhseq5SXWukulME546FtezCFeDxeRgZ2C23o2ptVofx4xODKyvoMTQIp4u8RYNNz83J54PkibNlUmO3km7JNlyWia3iaLHIQ/0?wx_fmt=jpeg" length="0" type="image//mmbiz_jpg/OcibJCmiavIHPRRQDhseq5SXWukulME546FtezCFeDxeRgZ2C23o2ptVofx4xODKyvoMTQIp4u8RYNNz83J54PkibNlUmO3km7JNlyWia3iaLHIQ/0"/>
-        </item>
-        <item>
-            <title><![CDATA[2026年实景三维数据赋能高质量发展创新应用典型案例征集工作开始啦！]]></title>
-            <link>https://mp.weixin.qq.com/s/pPCbk4SheUwTlIVBwUQ-lA</link>
-            <guid>https://mp.weixin.qq.com/s/pPCbk4SheUwTlIVBwUQ-lA</guid>
-            <pubDate>Fri, 14 Aug 2026 00:02:41 GMT</pubDate>
-            <enclosure url="https://mmbiz.qpic.cn/mmbiz_jpg/OcibJCmiavIHNG9t1opyGQMtcIdZSL2ia8vIXEGL8YG44UTjmkFCjPRtibiaWHiaT805hYZXaItY7sLP3hRw0RPLPcEPEUtnVUpJYl2Urt0PJibBuk/0?wx_fmt=jpeg" length="0" type="image//mmbiz_jpg/OcibJCmiavIHNG9t1opyGQMtcIdZSL2ia8vIXEGL8YG44UTjmkFCjPRtibiaWHiaT805hYZXaItY7sLP3hRw0RPLPcEPEUtnVUpJYl2Urt0PJibBuk/0"/>
-        </item>
-        <item>
-            <title><![CDATA[个性化地图渲染切片实战（3）：加载基础级别地图]]></title>
-            <link>https://mp.weixin.qq.com/s/3KxPNG2gp4xqp2405WZCZQ</link>
-            <guid>https://mp.weixin.qq.com/s/3KxPNG2gp4xqp2405WZCZQ</guid>
-            <pubDate>Thu, 13 Aug 2026 23:00:48 GMT</pubDate>
-            <enclosure url="https://mmbiz.qpic.cn/sz_mmbiz_jpg/0MYvDY87VUK1drf9Jia6Wsn2DCiaookLibBBjztrhZ3hN0pc0ddvfFaVQItLJLa2JgmWhwmhTHf9icNeSwVBWRicox9ntEyYxJ2djGRIPBSaibVt0/0?wx_fmt=jpeg" length="0" type="image//sz_mmbiz_jpg/0MYvDY87VUK1drf9Jia6Wsn2DCiaookLibBBjztrhZ3hN0pc0ddvfFaVQItLJLa2JgmWhwmhTHf9icNeSwVBWRicox9ntEyYxJ2djGRIPBSaibVt0/0"/>
         </item>
     </channel>
 </rss>

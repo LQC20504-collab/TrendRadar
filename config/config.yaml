@@ -302,10 +302,13 @@ rss:
 
     # 2026-10-25 新增：可持续城市与社会（Elsevier，ISSN 2210-6707）
     # 与上同属 ScienceDirect 官方 RSS，属城市/热环境/GIS 交叉方向
+    # 注意：ScienceDirect 的 RSS 条目**没有 pubDate**（只有 channel 级 lastBuildDate），
+    #       所以 max_age_days 对该源实际不生效 —— 首次抓取的"闸门"靠 max_items（默认 50，此处收紧到 20）。
     - id: "j-sustainable-cities-society"
       name: "Sustainable Cities and Society"
       url: "https://rss.sciencedirect.com/publication/science/22106707"
       max_age_days: 2
+      max_items: 20
 
     # 自定义源示例
     # - id: "custom-feed"

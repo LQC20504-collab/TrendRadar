@@ -260,7 +260,13 @@ node D:\Develop\TrendRadar\dbcheck.js   # 只读查看账号 status（根目录�
      url: "<上面验证过的地址>"
      max_age_days: 2
    ```
-5. **`max_age_days: 2`** 是首次灌水的闸门：新源第一次抓取时全部文章都是「新增」，给 2 天可避免一次推几十条。
+5. **`max_age_days: 2`** 对「条目自带日期」的源有效（新源首抓全部算新增，限 2 天可避免一次推几十条）。
+   ⚠️ **ScienceDirect 的 RSS 条目没有 `pubDate`**（日期只写在 description 文本里，解析后 `published_at` 为空）→
+   `max_age_days` 对它**实际不生效**，抓多少条就都是「新增」。这类源要用 **`max_items`** 兜底（真实运行默认 50）：
+   ```yaml
+       max_items: 20     # 首次灌水闸门；30 分钟一轮，正常情况下远达不到上限
+   ```
+   已实测：Sustainable Cities and Society 单次返回 100 条、`published_at` 全为空。
 
 ### 9.3 加微信公众号
 

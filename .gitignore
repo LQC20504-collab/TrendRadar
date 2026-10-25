@@ -19,3 +19,16 @@ index.html
 *~
 .DS_Store
 Thumbs.db
+
+# --- 运维临时产物 / 含密钥日志（勿提交，2026-10-25 补）---
+login.log                 # 微信读书 token 明文
+poll.out
+poll.err
+wewe-login-qr-*.png       # 扫码二维码（含 uuid）
+飞书群二维码.png           # 根目录副本，正式文件在 docs/
+.omo/logs/                # 隧道 URL、服务日志（体积大且含敏感信息）
+.omo/evidence/            # 一次性验收输出（含 trycloudflare URL / gh 账号信息）
+.omo/acl-recovery/        # 文件权限备份
+.omo/run-continuation/
+.omo/boulder.json
+.playwright-mcp/

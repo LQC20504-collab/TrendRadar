@@ -15,7 +15,7 @@
 ## 1. 系统架构（推送式，零隧道）
 
 ```
-期刊 / 机构 RSS 源（ScienceDirect、ESA、NASA、SpaceNews…共 21 个，见 config.yaml rss.feeds）
+期刊 / 机构 RSS 源（ScienceDirect、ESA、NASA、SpaceNews…共 17 个，见 config.yaml rss.feeds）
                 │
                 ▼  GitHub Actions（crawler.yml，手动 workflow_dispatch 触发）
    fetcher 抓取（临时故障自动重试一次）→ AI 翻译 → AI 分析 → 推送飞书 / ntfy
@@ -224,7 +224,8 @@ node D:\Develop\TrendRadar\dbcheck.js   # 只读查看账号 status（根目录�
 |---|---|
 | CI 工作流 | `D:\Develop\TrendRadar\.github\workflows\crawler.yml`（cron "17,47 * * * *" 不可靠 → 手动 workflow_dispatch） |
 | 去重逻辑 | `D:\Develop\TrendRadar\trendradar\storage\sqlite_mixin.py` |
-| **数据源配置** | `D:\Develop\TrendRadar\config\config.yaml` → `rss.feeds`（现 21 个源，增删步骤见第 9 节） |
+| **数据源配置** | `D:\Develop\TrendRadar\config\config.yaml` → `rss.feeds`（现 17 个源，2026-10-28 清理过一轮失效源，增删步骤见第 9 节） |
+| RSS 解析器 | `trendradar/crawler/rss/parser.py`（2026-10-28 修复 guid 为 str 时崩溃） |
 | AI 模型配置 | `config.yaml` → `ai.model` / `api_base`；Key 在 GitHub Secret `AI_API_KEY`；⚠️ Secret `AI_MODEL` 若存在会覆盖配置文件 |
 | 一键触发 | `D:\Develop\TrendRadar\trigger-push.ps1`（第 4 节） |
 | 上游同步 | 本地 tag `upstream-v6.10.0` / `upstream-v6.11.0`（fork 与上游无共同历史，只能按文件移植） |
@@ -316,3 +317,5 @@ gh workflow run crawler.yml                       # 立刻验证，别等 cron�
 - **`id` 是稳定键**（去重 / 配置引用都靠它）：改 `id` = 当成一个全新源；只改名请只改 `name`。
 - **删源**：删掉 `rss.feeds` 那段即可，数据库里的历史文章不受影响；公众号源还要删 `$Feeds` 里那行 + `feeds/` 下对应文件（可选）。
 - **新源首推会比较多**：属正常，`max_age_days` 调小即可；多源叠加时注意 `rss.feeds` 单次抓取总量与 `ai_analysis.max_news_for_analysis`（默认 150 条）的配额。
+- **加源前先本地探活**：`requests.get` + `feedparser` 看状态码与条目数，再用 `RSSParser().parse(text, feed_url=...)` 复验——TrendRadar 的解析器比 feedparser 更严格（例如 guid 形态、XML 语法），能过 feedparser 不代表能过它。加完跑一次 Actions 看日志里该源是否「获取 N 条」。
+- **2026-10-28 已清理的失效源**（勿原样加回）：GPS World（403 反爬）、GeoConnexion（404/403）、Planet Labs（全路径 404）、Maxar Blog（证书过期）、NASA Earth Observatory（XML 损坏，已改用 `www.nasa.gov/feed/`）、Google 研究博客（404，已改 `blog.google/technology/ai/rss/`）。

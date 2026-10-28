@@ -167,28 +167,31 @@ rss:
 
     # ──────────────────────────────────────────────────────────
     # GIS/RS 专业期刊（英文顶刊，ScienceDirect / Taylor & Francis 官方 RSS）
-    # 2026-08-13 新增；max_age_days=2 控制初始同步量，避免首次大灌水
+    # 2026-08-13 新增，2026-10-28 起全部改走独立展示区「论文速递」
+    # ⚠️ 这 8 本刊已登记在 rss.keyword_exclude_feeds，不参与关键词匹配/推送/AI 分析，
+    #    因此统一设 max_age_days: 0 —— 新鲜度过滤对它们只会造成副作用
+    #    （论文发表日期常跨周，按 3 天过滤会把速递区清空）。
     # ──────────────────────────────────────────────────────────
 
     - id: "j-remote-sensing-env"
       name: "Remote Sensing of Environment (RSE)"
       url: "https://rss.sciencedirect.com/publication/science/00344257"
-      max_age_days: 2
+      max_age_days: 0
 
     - id: "j-isprs-jprs"
       name: "ISPRS J. Photogrammetry & Remote Sensing"
       url: "https://rss.sciencedirect.com/publication/science/09242716"
-      max_age_days: 2
+      max_age_days: 0
 
     - id: "j-rs-applications"
       name: "Remote Sensing Applications: Society & Environment"
       url: "https://rss.sciencedirect.com/publication/science/23529385"
-      max_age_days: 2
+      max_age_days: 0
 
     - id: "j-computers-geosciences"
       name: "Computers & Geosciences"
       url: "https://rss.sciencedirect.com/publication/science/00983004"
-      max_age_days: 2
+      max_age_days: 0
 
     # 2026-10-25 新增：可持续城市与社会（Elsevier，ISSN 2210-6707）
     # 与上同属 ScienceDirect 官方 RSS，属城市/热环境/GIS 交叉方向
@@ -197,7 +200,7 @@ rss:
     - id: "j-sustainable-cities-society"
       name: "Sustainable Cities and Society"
       url: "https://rss.sciencedirect.com/publication/science/22106707"
-      max_age_days: 2
+      max_age_days: 0
       max_items: 20
 
     # 2026-10-28 新增：Taylor & Francis 三本 GIS/RS 核心刊（通道实测可用）
@@ -207,17 +210,17 @@ rss:
     - id: "j-ijgis"
       name: "Int. J. Geographical Information Science (IJGIS)"
       url: "https://www.tandfonline.com/feed/rss/tgis20"
-      max_age_days: 2
+      max_age_days: 0
 
     - id: "j-giscience-rs"
       name: "GIScience & Remote Sensing"
       url: "https://www.tandfonline.com/feed/rss/tgrs20"
-      max_age_days: 2
+      max_age_days: 0
 
     - id: "j-int-digital-earth"
       name: "Int. J. Digital Earth"
       url: "https://www.tandfonline.com/feed/rss/tjde20"
-      max_age_days: 2
+      max_age_days: 0
 
     # 自定义源示例
     # - id: "custom-feed"

@@ -612,10 +612,35 @@ class NewsAnalyzer:
                 })
 
         # 提取 RSS 数据
-        if rss_items and rss_feed_ids:
+        if rss_feed_ids:
+            source_items = list(rss_items or [])
+
+            # 增量模式下 rss_items 只包含「本轮新增」条目；期刊更新稀疏（一周几篇），
+            # 若首次抓取就被判定为非新增，速递区会长期为空。
+            # 因此对没有新增条目的源，回退到「最新一次抓取的完整批次」，保证始终能展示最新 N 篇。
+            missing_ids = {
+                fid for fid in rss_feed_ids
+                if not any(item.get("feed_id") == fid for item in source_items)
+            }
+            if missing_ids:
+                try:
+                    latest_data = self.storage_manager.get_latest_rss_data()
+                    if latest_data and latest_data.items:
+                        subset = {
+                            fid: feed_items
+                            for fid, feed_items in latest_data.items.items()
+                            if fid in missing_ids
+                        }
+                        if subset:
+                            source_items.extend(
+                                self._convert_rss_items_to_list(subset, latest_data.id_to_name)
+                            )
+                except Exception as e:
+                    print(f"[独立展示区] 读取最新 RSS 批次失败（不影响其它区域）: {e}")
+
             # 按 feed_id 分组
             feed_items_map = {}
-            for item in rss_items:
+            for item in source_items:
                 feed_id = item.get("feed_id", "")
                 if feed_id in rss_feed_ids:
                     if feed_id not in feed_items_map:

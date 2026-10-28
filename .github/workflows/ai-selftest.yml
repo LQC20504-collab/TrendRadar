@@ -1,0 +1,46 @@
+name: AI Self Test
+
+# 临时工作流：仅用于验证 AI 模型/Key/endpoint 组合是否可用（2026-10-28 一次性验证，用完即删）
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v7
+      - name: Sync deps
+        run: uv sync --frozen --no-dev
+      - name: Call model
+        env:
+          AI_API_KEY: ${{ secrets.AI_API_KEY }}
+          AI_MODEL: ${{ secrets.AI_MODEL }}
+          AI_API_BASE: ${{ secrets.AI_API_BASE }}
+        run: |
+          uv run python - <<'PY'
+          import os
+          from trendradar.ai.client import AIClient
+
+          cfg = {
+              "MODEL": os.environ.get("AI_MODEL", ""),
+              "API_KEY": os.environ.get("AI_API_KEY", ""),
+              "API_BASE": os.environ.get("AI_API_BASE", ""),
+              "TIMEOUT": 120,
+              "TEMPERATURE": 0.7,
+              "MAX_TOKENS": 200,
+              "NUM_RETRIES": 1,
+              "FALLBACK_MODELS": [],
+              "EXTRA_PARAMS": {},
+          }
+          print("MODEL =", cfg["MODEL"])
+          print("BASE  =", cfg["API_BASE"] or "(empty)")
+          print("KEY   =", "set" if cfg["API_KEY"] else "MISSING")
+
+          c = AIClient(cfg)
+          ok, msg = c.validate_config()
+          print("validate_config:", ok, msg)
+
+          out = c.chat([{"role": "user", "content": "用一句话说明地球观测的意义"}])
+          print("RESPONSE >>>", out[:300])
+          PY

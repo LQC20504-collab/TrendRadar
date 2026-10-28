@@ -74,8 +74,10 @@ rss:
     # ──────────────────────────────────────────────────────────
 
     - id: "nasa-earth-observatory"
-      name: "NASA Earth Observatory"
-      url: "https://earthobservatory.nasa.gov/rss.xml"
+      name: "NASA News"
+      # 2026-10-28 换源：earthobservatory.nasa.gov/rss.xml 返回的 XML 语法错误
+      # （feedparser bozo），science.nasa.gov/feed 同样损坏；改用 NASA 主站 feed（实测 10 条）
+      url: "https://www.nasa.gov/feed/"
       max_age_days: 3
 
     - id: "esa-observing-earth"
@@ -108,20 +110,15 @@ rss:
       url: "https://spacenews.com/feed"
       max_age_days: 3
 
-    - id: "gps-world"
-      name: "GPS World"
-      url: "https://www.gpsworld.com/feed"
-      max_age_days: 3
+    # 2026-10-28 移除 GPS World：https://www.gpsworld.com/feed 返回 403（Cloudflare 反爬，
+    # 带浏览器 UA 同样 403），Actions 的机房 IP 也过不去
 
     - id: "xyht"
       name: "XYHT - 测绘/遥感杂志"
       url: "https://www.xyht.com/feed"
       max_age_days: 3
 
-    - id: "geoconnexion"
-      name: "GeoConnexion"
-      url: "https://www.geoconnexion.com/feed"
-      max_age_days: 3
+    # 2026-10-28 移除 GeoConnexion：/feed 404、/rss 403，站点已无可用 RSS
 
     - id: "geospatial-world"
       name: "Geospatial World"
@@ -138,19 +135,10 @@ rss:
       url: "https://gisgeography.com/feed/"
       max_age_days: 3
 
-    # ──────────────────────────────────────────────────────────
-    # 卫星 / 航天 行业源
-    # ──────────────────────────────────────────────────────────
-
-    - id: "planet-labs"
-      name: "Planet Labs"
-      url: "https://www.planet.com/feed"
-      max_age_days: 3
-
-    - id: "maxar"
-      name: "Maxar Blog"
-      url: "https://blog.maxar.com/feed"
-      max_age_days: 3
+    # 2026-10-28 移除「卫星 / 航天」专段两个源，均无可用 RSS：
+    #   - Planet Labs：planet.com 所有 feed 路径全部 404（/feed、/pulse/feed、/blog/feed、/rss、/news/feed）
+    #   - Maxar Blog：blog.maxar.com 证书已过期（SSLCertVerificationError），www.maxar.com/feed 亦不可用
+    # 该领域保留 SpaceNews / ESA / NASA 覆盖
 
     # ──────────────────────────────────────────────────────────
     # AI / 科技 源（与 GIS/RS 交叉）
@@ -158,7 +146,9 @@ rss:
 
     - id: "google-ai-blog"
       name: "Google AI Blog"
-      url: "https://blog.research.google/feed"
+      # 2026-10-28 换源：blog.research.google/feed 已 404（Google 研究博客迁移）
+      # 新地址由 Actions 运行日志复核，若仍失败则改为删除
+      url: "https://blog.google/technology/ai/rss/"
       max_age_days: 3
 
     # ──────────────────────────────────────────────────────────
@@ -418,7 +408,10 @@ ai:
   # 完整列表: https://docs.litellm.ai/docs/providers
   # 如果你对于看英文文档比较头疼，那么可以点击页面右下角的 【Ask AI】 ,用中文询问怎么配置
 
-  model: "openai/glm-4-flash"
+  model: "openai/glm-4.7-flash"
+                                    # 2026-10-28 由 glm-4-flash 升级：同为智谱免费档（$0），
+                                    # 上下文 200K（原 4-Flash 为 128K），中文分析与 JSON 输出更强。
+                                    # ⚠️ 若仓库 Secret AI_MODEL 有值会覆盖此项，改模型需同步改 Secret。
 
   api_key: ""                       # API Key（建议使用环境变量 AI_API_KEY）
   
@@ -453,7 +446,8 @@ ai:
                                     # 注意：如果 API 不支持此参数(报 HTTP 400)，请设为 0 以禁用发送
   # 高级选项
   num_retries: 1                    # 失败重试次数
-  fallback_models: []               # 备用模型列表（可选）
+  fallback_models: ["openai/glm-4.5-flash", "openai/glm-4-flash"]
+                                    # 2026-10-28 设置免费兜底链：主模型挂了依次降级，同一把 Key / 同一 endpoint
                                     # 示例: ["openai/gpt-4o-mini", "openai/deepseek-ai/DeepSeek-V3"]
 
   # 额外参数（一般无需修改，删掉 # 号即可启用）

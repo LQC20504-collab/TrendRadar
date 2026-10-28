@@ -1,31 +1,38 @@
-# AGENTS.md — TrendRadar 微信公众号聚合推送运维手册
+# AGENTS.md — TrendRadar RSS 聚合推送运维手册
 
-> 本文件供 AI 助手（及人类）在**后续会话**中快速恢复上下文：启动 wewe-rss、验证服务、同步 RSS、触发 GitHub Actions 推送。
-> 用户会在需要时直接说「帮我启动」——按本手册执行即可。
+> 本文件供 AI 助手（及人类）在**后续会话**中快速恢复上下文：检查服务、加数据源、触发 GitHub Actions 推送。
+> 用户会在需要时直接说「帮我推一次」——按第 4 节执行即可。
+>
+> ⛔ **2026-10-28 重大变更：微信公众号链路已整体退役。**
+> 用户明确表示不再需要公众号文章推送，因此 `wewe-rss`（本地 4000 端口）、`feeds/*.rss`、
+> `sync-wechat-rss.ps1` 全部停用；`config.yaml` 中 22 个 `wechat-*` 源已删除，
+> `crawler.yml` 的「Inject WeChat RSS URL」步骤已删除。
+> **不要**再启动 wewe-rss、不要再跑同步脚本、不要重加 `${WECHAT_RSS_URL}` 占位符。
+> 第 2 / 3 / 5 节与 9.3 节仅作历史参考保留。
 
 ---
 
 ## 1. 系统架构（推送式，零隧道）
 
 ```
-微信公众号 → wewe-rss（本地 4000 端口，SQLite）
-                │  定时/手动刷新文章
-                ▼
-   http://localhost:4000/feeds/*.rss   （聚合源 all.rss + 按账号源 MP_WXS_*.rss）
+期刊 / 机构 RSS 源（ScienceDirect、ESA、NASA、SpaceNews…共 21 个，见 config.yaml rss.feeds）
                 │
-                ▼  sync-wechat-rss.ps1（拉取 23 个源 → 提交 → push）
-   GitHub 仓库 LQC20504-collab/TrendRadar 的 feeds/ 目录
+                ▼  GitHub Actions（crawler.yml，手动 workflow_dispatch 触发）
+   fetcher 抓取（临时故障自动重试一次）→ AI 翻译 → AI 分析 → 推送飞书 / ntfy
                 │
-                ▼  GitHub Actions（crawler.yml，cron "17,47 * * * *"）
-   起临时 http.server:9000 服务 feeds/ → fetcher 抓取 → 翻译 → 推送微信/飞书
+                ▼  同时生成 index.html → 部署 GitHub Pages
 ```
 
-- 旧方案（cloudflared 隧道 + WECHAT_RSS_URL Secret）已弃用，勿回退。
-- **核心脆弱点**：wewe-rss 服务停掉 → 同步脚本拉不到新文章 → 推送停滞。根因排查从检查 4000 端口开始。
+- 数据源全部为公网可直连的 RSS，**Actions 里无需任何本地服务或隧道**，这是 2026-10-28 之后的核心简化。
+- 核心脆弱点只剩两个：① `gh` 未认证导致触发失败；② AI Key 失效/额度用尽导致分析缺失（推送仍会发出）。
+
 
 ---
 
-## 2. 启动 wewe-rss（用户最常见的请求）
+## 2. 启动 wewe-rss（⛔ 已退役，2026-10-28）
+
+> **不要再执行本节。** 用户已不需要公众号文章，wewe-rss 无需启动；若有人要求「帮我启动」，
+> 先确认是不是指第 4 节的「帮我推一次」。以下内容仅作历史参考。
 
 ### 2.0 前置检查
 - Node `v24.16.0`、pnpm `11.17.0` 已装。
@@ -87,7 +94,10 @@ curl.exe -s -o NUL -w "%{http_code}" --connect-timeout 5 --max-time 15 http://lo
 
 ---
 
-## 3. 同步 RSS 到 GitHub（新文章入库后）
+## 3. 同步 RSS 到 GitHub（⛔ 已退役，2026-10-28）
+
+> **不要再执行本节。** `feeds/*.rss` 与 `sync-wechat-rss.ps1` 已不在推送链路中，
+> 现在 `trigger-push.ps1` 只负责推代码 + 触发 Actions（见第 4 节）。以下内容仅作历史参考。
 
 ```powershell
 cd D:\Develop\TrendRadar
@@ -113,8 +123,9 @@ powershell -ExecutionPolicy Bypass -File sync-wechat-rss.ps1 -NoPush      # 拉�
 ```powershell
 powershell -ExecutionPolicy Bypass -File D:\Develop\TrendRadar\trigger-push.ps1
 ```
-脚本自动完成：① 检查 gh 认证 + wewe-rss 存活（挂了自动拉起）→ ② 刷新微信文章 → ③ 同步 RSS 到 GitHub
-（commit+push，push 失败自动用 gh token 兜底）→ ④ 触发 `gh workflow run crawler.yml` → ⑤ 轮询等待并核对日志。
+脚本自动完成：① 检查 gh 认证 → ② 推送本地未推送提交（失败自动用 gh token 兜底）→ ③ 触发
+`gh workflow run crawler.yml` → ④ 轮询等待并核对日志。
+（2026-10-28 起不再检查 wewe-rss、不再刷新微信文章、不再同步 RSS —— 见文首退役说明。）
 - 退出码 0 = 成功（含「无新增正常跳过」）；1 = 失败（具体 FAIL 步骤见输出）。
 - 兜底推送（非交互环境 GCM 弹不出凭据时）：
   `git push "https://x-access-token:$(gh auth token)@github.com/LQC20504-collab/TrendRadar.git" master`
@@ -136,7 +147,10 @@ gh run view <run-id> --log | Select-String "检测到|推送|翻译"    # 看关
 
 ---
 
-## 5. 账号 / Token 维护（出问题时）
+## 5. 账号 / Token 维护（⛔ 已退役，2026-10-28）
+
+> **不要再执行本节。** 微信读书 token / 扫码续期只服务于 wewe-rss，链路退役后不再需要。
+> 若 `login.log` 等文件仍在，可清理。以下内容仅作历史参考。
 
 ### 5.1 症状 → 根因
 | 症状 | 根因 | 处置 |
@@ -203,28 +217,23 @@ node D:\Develop\TrendRadar\dbcheck.js   # 只读查看账号 status（根目录�
 
 | 项 | 位置 |
 |---|---|
-| wewe-rss 仓库 | `D:\Develop\wewe-rss`（独立 git 仓库） |
-| wewe-rss 服务端 | `D:\Develop\wewe-rss\apps\server`（`pnpm --filter server start:prod`） |
-| 服务端配置 | `apps/server/.env.local`（DATABASE_TYPE=sqlite, PORT=4000, AUTH_CODE — **勿提交**） |
-| SQLite 数据库 | `apps/server/data/wewe-rss.db` |
-| 同步脚本 | `D:\Develop\TrendRadar\sync-wechat-rss.ps1` |
-| 仓库 feeds | `D:\Develop\TrendRadar\feeds\`（all.rss + 22 个 MP_WXS_*.rss） |
-| CI 工作流 | `D:\Develop\TrendRadar\.github\workflows\crawler.yml`（cron "17,47 * * * *"） |
+| CI 工作流 | `D:\Develop\TrendRadar\.github\workflows\crawler.yml`（cron "17,47 * * * *" 不可靠 → 手动 workflow_dispatch） |
 | 去重逻辑 | `D:\Develop\TrendRadar\trendradar\storage\sqlite_mixin.py` |
-| **数据源配置** | `D:\Develop\TrendRadar\config\config.yaml` → `rss.feeds`（增删源步骤见第 9 节） |
-| 公众号源清单 | 同一份 `rss.feeds` + `sync-wechat-rss.ps1` 的 `$Feeds` 哈希表（两处都要加） |
-| 运维计划 | `D:\Develop\TrendRadar\.omo\plans\wechat-rss-setup.md`（含完整初始化仪式与验收记录） |
-| 运维脚本（根目录） | `login_and_persist.py`（一键扫码续期，推荐）/ `create_login.py`（生成 uuid）/ `gen_qr.py`（渲染二维码）/ `get_login_result.py`（轮询）/ `save_token.py`（手动持久化）/ `dbcheck.js`（账号状态） |
-| 临时脚本 | `C:\Users\20504\AppData\Local\Temp\opencode\`（dbcheck.js / dbreset.js / gen_qr.py / save_token.py / get_login_result.py / check_articles.py） |
+| **数据源配置** | `D:\Develop\TrendRadar\config\config.yaml` → `rss.feeds`（现 21 个源，增删步骤见第 9 节） |
+| AI 模型配置 | `config.yaml` → `ai.model` / `api_base`；Key 在 GitHub Secret `AI_API_KEY`；⚠️ Secret `AI_MODEL` 若存在会覆盖配置文件 |
+| 一键触发 | `D:\Develop\TrendRadar\trigger-push.ps1`（第 4 节） |
+| 上游同步 | 本地 tag `upstream-v6.10.0` / `upstream-v6.11.0`（fork 与上游无共同历史，只能按文件移植） |
+| 已退役（仅历史） | `D:\Develop\wewe-rss`、`apps/server/.env.local`、`feeds/`、`sync-wechat-rss.ps1`、`login_and_persist.py`、`dbcheck.js`、`keep-wewe-rss-alive.ps1`、`.omo\plans\wechat-rss-setup.md` |
 
 ---
 
 ## 8. 常见问题速答
 
-- **「帮我启动」** → 第 2 节（2.1 检查 → 2.2 启动 → 2.4 验证 200）。
-- **启动后没新文章** → 先 `feed.refreshArticles`（POST body `{}`）手动刷新一次，再跑 sync 脚本（第 3 节）。
-- **Actions 没跑 / 没推送** → 先看本机 wewe-rss 是否在跑 + feeds 是否更新（第 3 节），再 `gh workflow run crawler.yml`（第 4 节）。
-- **500「暂无可用读书账号」** → 第 5.1 表：账号 status=0 → `node D:\Develop\TrendRadar\dbcheck.js` 确认 → 按 5.2 一键脚本续期。
+- **「帮我推一次」** → 第 4 节 `trigger-push.ps1` 一把梭（不再需要任何本地服务）。
+- **Actions 没跑 / 没推送** → 先 `gh auth status`，再 `gh run list --workflow=crawler.yml --limit 5` 看失败原因（第 4 节）。
+- **推送里没有 AI 总结** → 查 Secret `AI_API_KEY` 是否有效、`AI_MODEL` 是否覆盖成不存在的模型名；推送本身不受影响。
+- **某个 RSS 源抓不到** → 用 `curl <url>` 确认源本身是否 200；ScienceDirect 源无 `pubDate`，靠 `max_items` 兜底（9.2 节）。
+- （历史）**公众号相关报错** → 链路已于 2026-10-28 退役，相关章节仅作参考，不再处置。
 
 ---
 
@@ -235,7 +244,7 @@ node D:\Develop\TrendRadar\dbcheck.js   # 只读查看账号 status（根目录�
 | 源类型 | 做法 | 要改的地方 |
 |---|---|---|
 | 有官方 RSS 的期刊 / 网站 | 直连抓 | `config/config.yaml` → `rss.feeds` 加一段 |
-| 微信公众号 | 必须经本地 wewe-rss 转成 RSS | `rss.feeds` **+** `sync-wechat-rss.ps1` 的 `$Feeds` |
+| 微信公众号 | ⛔ 已退役（2026-10-28），不要新增 | — |
 | 没有 RSS 的网站 | 先用 RSSHub 等转换出 feed，再按第一类加 | 同第一类（`url` 填转换后的地址） |
 
 > `config/config.en.yaml` 是上游英文模板，**不是生效配置**，只在 `config.yaml` 里加。
@@ -268,7 +277,11 @@ node D:\Develop\TrendRadar\dbcheck.js   # 只读查看账号 status（根目录�
    ```
    已实测：Sustainable Cities and Society 单次返回 100 条、`published_at` 全为空。
 
-### 9.3 加微信公众号
+### 9.3 加微信公众号（⛔ 已退役，2026-10-28）
+
+> 公众号源已全部移除（用户不再需要）。如将来要恢复，需同时恢复：`config.yaml` 源条目、
+> `crawler.yml` 的 Inject WeChat RSS URL 步骤、`feeds/` 同步脚本，并重启 wewe-rss。
+> 以下内容仅作历史参考。
 
 1. 先在 wewe-rss 里能抓到该号（它自己会生成 `MP_WXS_<id>.rss`）。
 2. 取到 `<id>` 后，`config.yaml` 加：

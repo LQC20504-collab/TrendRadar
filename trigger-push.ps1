@@ -5,29 +5,24 @@
     GitHub 平台 bug：新建仓库的 schedule cron 定时触发可能永不生效（2026-01 起平台级问题，
     见 github community #201008）。因此手动触发是本系统「定时推送」的标准替代方案。
 
+    2026-10-28 起，微信公众号（wewe-rss）链路已退役：不再检查/拉起本地 4000 服务、
+    不再刷新微信文章、不再同步 feeds/*.rss。本脚本只保留「推代码 + 触发 Actions + 验日志」。
+
     本脚本自动完成完整链路并逐步验证：
-      0. 前置检查（gh 认证 + wewe-rss 存活，挂了自动拉起）
-      1. 刷新微信文章（让同步拿到最新内容）
-      2. 同步 RSS 到 GitHub（commit + push；push 失败自动用 gh token 兜底）
-      3. 触发 GitHub Actions（gh workflow run crawler.yml）
-      4. 轮询等待运行完成，核对日志（有 [推送] = 成功；无新增 = 正常跳过）
+      0. 前置检查（gh 认证）
+      1. 推送本地提交（有未推送提交时 push；失败自动用 gh token 兜底）
+      2. 触发 GitHub Actions（gh workflow run crawler.yml）
+      3. 轮询等待运行完成，核对日志（有 [推送] = 成功；无新增 = 正常跳过）
     exit code: 0 = 成功（含「无新增正常跳过」）；1 = 失败
 .NOTES
     用法：powershell -ExecutionPolicy Bypass -File D:\Develop\TrendRadar\trigger-push.ps1
-    依赖：gh 已认证（gh auth status）、wewe-rss 可被拉起（keep-wewe-rss-alive.ps1）
+    依赖：gh 已认证（gh auth status）
 #>
 
 $ErrorActionPreference = 'Continue'
-$repoRoot      = 'D:\Develop\TrendRadar'
-$weweEnvLocal  = 'D:\Develop\wewe-rss\apps\server\.env.local'
+$repoRoot = 'D:\Develop\TrendRadar'
 
 function Write-Step($msg) { Write-Output "`n===== $msg =====" }
-function Test-WeweAlive {
-    try {
-        $code = curl.exe -s -o NUL -w "%{http_code}" --connect-timeout 5 --max-time 15 "http://localhost:4000/feeds/all.rss" 2>$null
-        return ($code -eq "200")
-    } catch { return $false }
-}
 
 # ── 0. 前置检查 ──────────────────────────────────────────────
 Write-Step "0. 前置检查"
@@ -38,59 +33,41 @@ if ($LASTEXITCODE -ne 0) {
 }
 Write-Output "[OK] gh 已认证"
 
-if (-not (Test-WeweAlive)) {
-    Write-Output "[WARN] wewe-rss 未运行（4000 无响应），尝试自动拉起..."
-    powershell -NoProfile -ExecutionPolicy Bypass -File "$repoRoot\keep-wewe-rss-alive.ps1" | Out-Null
-    if (-not (Test-WeweAlive)) {
-        Write-Output "[FAIL] wewe-rss 拉起失败，请先解决服务问题（见 AGENTS.md 第 2 节）"
-        exit 1
-    }
+# ── 1. 推送本地提交 ─────────────────────────────────────────
+Write-Step "1. 推送本地提交"
+$branch = (git -C $repoRoot rev-parse --abbrev-ref HEAD).Trim()
+Write-Output "[INFO] 当前分支: $branch"
+if ($branch -ne 'master') {
+    Write-Output "[WARN] 当前不在 master，workflow_dispatch 仍按默认分支(master)运行，推送不会影响本次推送内容"
 }
-Write-Output "[OK] wewe-rss 运行中"
-
-# ── 1. 刷新微信文章 ──────────────────────────────────────────
-Write-Step "1. 刷新微信文章"
-$auth = ""
-if (Test-Path $weweEnvLocal) {
-    $m = Select-String -Path $weweEnvLocal -Pattern '^AUTH_CODE=(.+)$'
-    if ($m) { $auth = $m.Matches[0].Groups[1].Value.Trim().Trim('"') }
-}
-if ($auth) {
-    try {
-        Invoke-RestMethod -Uri "http://localhost:4000/trpc/feed.refreshArticles" -Method Post `
-            -Headers @{ Authorization = $auth } -ContentType "application/json" -Body '{}' -TimeoutSec 300 | Out-Null
-        Write-Output "[OK] 刷新已触发，等待 30 秒让文章落库..."
-        Start-Sleep -Seconds 30
-    } catch {
-        Write-Output "[WARN] 刷新失败（不阻塞，继续）: $($_.Exception.Message)"
-    }
-} else {
-    Write-Output "[WARN] 未找到 AUTH_CODE（$weweEnvLocal），跳过刷新"
-}
-
-# ── 2. 同步 RSS 到 GitHub ────────────────────────────────────
-Write-Step "2. 同步 RSS 到 GitHub"
-powershell -NoProfile -ExecutionPolicy Bypass -File "$repoRoot\sync-wechat-rss.ps1" 2>&1 | Select-Object -Last 6
-
-# 若 sync 因凭据问题只 commit 未 push，用 gh token 兜底
 git -C $repoRoot fetch origin --quiet 2>$null
-$unpushed = git -C $repoRoot log --oneline origin/master..HEAD 2>$null
-if ($unpushed) {
-    Write-Output "[INFO] 检测到未推送提交，用 gh token 兜底推送..."
-    $tok = gh auth token
-    git -C $repoRoot push "https://x-access-token:$tok@github.com/LQC20504-collab/TrendRadar.git" master 2>&1 | Select-Object -Last 2
+$hasRemote = git -C $repoRoot rev-parse --verify --quiet "origin/$branch" 2>$null
+$needPush = $false
+if (-not $hasRemote) {
+    Write-Output "[INFO] 远程无该分支，将首次推送"
+    $needPush = $true
+} else {
+    $cnt = [int](git -C $repoRoot rev-list --count "origin/$branch..HEAD" 2>$null)
+    $needPush = ($cnt -gt 0)
+    if ($needPush) { Write-Output "[INFO] 有 $cnt 个未推送提交" } else { Write-Output "[OK] 无未推送提交" }
+}
+if ($needPush) {
+    git -C $repoRoot push origin $branch 2>&1 | Select-Object -Last 2
+    if ($LASTEXITCODE -ne 0) {
+        Write-Output "[WARN] 常规推送失败（凭据问题？），改用 gh token 兜底..."
+        $tok = gh auth token
+        git -C $repoRoot push "https://x-access-token:$tok@github.com/LQC20504-collab/TrendRadar.git" $branch 2>&1 | Select-Object -Last 2
+    }
     if ($LASTEXITCODE -eq 0) {
-        Write-Output "[OK] 兜底推送成功"
+        Write-Output "[OK] 推送成功"
     } else {
-        Write-Output "[FAIL] 兜底推送失败，请手动执行: git push origin master"
+        Write-Output "[FAIL] 推送失败，请手动执行: git push origin $branch"
         exit 1
     }
-} else {
-    Write-Output "[OK] 无未推送提交（内容无变化或已推送）"
 }
 
-# ── 3. 触发 GitHub Actions ───────────────────────────────────
-Write-Step "3. 触发 GitHub Actions"
+# ── 2. 触发 GitHub Actions ───────────────────────────────────
+Write-Step "2. 触发 GitHub Actions"
 $runUrl = gh workflow run crawler.yml 2>&1
 Write-Output $runUrl
 Start-Sleep -Seconds 8
@@ -103,9 +80,10 @@ if (-not $runId -or $runId -notmatch '^\d+$') {
 }
 Write-Output "[OK] 新运行 ID: $runId"
 
-# ── 4. 等待运行完成并验证 ────────────────────────────────────
-Write-Step "4. 等待运行完成并验证推送"
+# ── 3. 等待运行完成并验证 ────────────────────────────────────
+Write-Step "3. 等待运行完成并验证推送"
 $status = ""
+$conclusion = ""
 for ($i = 1; $i -le 36; $i++) {
     Start-Sleep -Seconds 10
     $l = gh run list --workflow=crawler.yml --limit 1 2>$null
@@ -140,5 +118,3 @@ if ($job) {
 }
 Write-Output "`n===== 完成 ====="
 exit 0
-
-

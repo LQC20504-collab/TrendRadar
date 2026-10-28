@@ -118,6 +118,11 @@ powershell -ExecutionPolicy Bypass -File sync-wechat-rss.ps1 -NoPush      # 拉�
 > ⚠️ **2026-08-13 起（重要）**：GitHub 平台 bug —— 新建仓库的 schedule cron 定时触发可能永不生效
 > （workflow 显示 active、workflow_dispatch 正常，但 schedule 事件从未触发；见 github community #201008，
 > 官方答复「向默认分支 push 可重同步」实测无效）。**结论：不依赖 cron，一律手动触发。**
+>
+> 📌 **2026-10-28 复测更新**：cron 已经**不是完全不触发**了，但被 GitHub 大幅节流 ——
+> 表达式是 `17,47 * * * *`（每 30 分钟一次），实际最近 8 次运行全是 `schedule` 事件且成功，
+> 间隔却是 **4~6 小时**（10-26 23:55Z → 10-27 05:09Z → 10-27 10:37Z → 10-27 16:02Z → 10-27 20:43Z
+> → 10-28 00:03Z → 10-28 05:46Z）。**结论不变：想要准点推送仍得手动 `workflow_dispatch`。**
 
 ### 4.0 标准手动触发（推荐，一键脚本）
 ```powershell

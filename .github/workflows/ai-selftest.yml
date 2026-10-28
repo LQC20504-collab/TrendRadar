@@ -24,18 +24,24 @@ jobs:
 
           base = os.environ.get("AI_API_BASE", "")
           key = os.environ.get("AI_API_KEY", "")
-          print("BASE =", bool(base), "| KEY =", "set" if key else "MISSING")
-          print("SECRET AI_MODEL =", os.environ.get("AI_MODEL", ""))
+          print("BASE set =", bool(base), "| KEY =", "set" if key else "MISSING")
 
-          for model in ["openai/glm-4.7-flash", "openai/glm-4.5-flash", "openai/glm-4-flash"]:
+          cases = [
+              ("openai/glm-4.7-flash", {}),
+              ("openai/glm-4.5-flash", {}),
+              ("openai/glm-4.5-flash", {"thinking": {"type": "disabled"}}),
+              ("openai/glm-4-flash", {}),
+          ]
+          for model, extra in cases:
               cfg = {
                   "MODEL": model, "API_KEY": key, "API_BASE": base,
-                  "TIMEOUT": 120, "TEMPERATURE": 0.7, "MAX_TOKENS": 120,
-                  "NUM_RETRIES": 0, "FALLBACK_MODELS": [], "EXTRA_PARAMS": {},
+                  "TIMEOUT": 120, "TEMPERATURE": 0.7, "MAX_TOKENS": 800,
+                  "NUM_RETRIES": 0, "FALLBACK_MODELS": [], "EXTRA_PARAMS": extra,
               }
+              tag = model + (f" extra={extra}" if extra else "")
               try:
                   out = AIClient(cfg).chat([{"role": "user", "content": "用一句话说明地球观测的意义"}])
-                  print(f"[OK]   {model} -> {out[:80]}")
+                  print(f"[OK]   {tag} | len={len(out)} | {out[:100]!r}")
               except Exception as e:
-                  print(f"[FAIL] {model} -> {type(e).__name__}: {str(e)[:120]}")
+                  print(f"[FAIL] {tag} | {type(e).__name__}: {str(e)[:100]}")
           PY

@@ -846,7 +846,10 @@ class NewsAnalyzer:
         # 检查是否有有效内容（热榜或RSS）
         has_news_content = self._has_valid_content(stats, new_titles)
         has_rss_content = bool(rss_items and len(rss_items) > 0)
-        has_any_content = has_news_content or has_rss_content
+        # 独立展示区（如期刊「论文速递」）有新增时也要推送：
+        # 这些源被排除在关键词统计之外，不单独判定的话「有新论文」永远不会触发通知
+        has_standalone_content = getattr(self, "_new_standalone_count", 0) > 0
+        has_any_content = has_news_content or has_rss_content or has_standalone_content
 
         # 计算热榜匹配条数
         news_count = sum(len(stat.get("titles", [])) for stat in stats) if stats else 0
@@ -1162,6 +1165,10 @@ class NewsAnalyzer:
         rss_new_stats = None
         raw_rss_items = None  # 原始 RSS 条目列表（用于独立展示区）
         rss_new_urls = set()  # 原始新增 RSS URLs（未经关键词过滤）
+        # 本轮新增的「独立展示区」条目数（期刊论文）。
+        # 这些源被 rss.keyword_exclude_feeds 排除在关键词统计之外，
+        # 所以「有没有新论文」必须单独计数，否则有新增论文时也不会触发推送。
+        self._new_standalone_count = 0
 
         # 1. 首先获取原始条目（用于独立展示区，不受 display.regions.rss 影响）
         # 根据模式获取原始条目
@@ -1191,6 +1198,21 @@ class NewsAnalyzer:
                 print(f"[RSS] 检测到 {len(new_items_list)} 条新增")
                 # 收集原始新增 URLs（未经关键词过滤，用于 AI 模式 is_new 检测）
                 rss_new_urls = {item["url"] for item in new_items_list if item.get("url")}
+
+                # 统计新增论文数（独立展示区的源不在关键词统计里，需单独判断是否值得推送）
+                standalone_ids = set(
+                    self.ctx.config.get("DISPLAY", {}).get("STANDALONE", {}).get("RSS_FEEDS", []) or []
+                )
+                if standalone_ids:
+                    self._new_standalone_count = sum(
+                        1 for item in new_items_list if item.get("feed_id") in standalone_ids
+                    )
+                    if self._new_standalone_count:
+                        keyword_new = len(new_items_list) - self._new_standalone_count
+                        print(
+                            f"[RSS] 其中新增论文 {self._new_standalone_count} 篇（独立展示区），"
+                            f"关键词区新增 {keyword_new} 条"
+                        )
 
         # 3. 根据模式获取统计条目
         if self.report_mode == "incremental":

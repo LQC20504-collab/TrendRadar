@@ -223,7 +223,7 @@ node D:\Develop\TrendRadar\dbcheck.js   # 只读查看账号 status（根目录�
 | AI 模型配置 | `config.yaml` → `ai.model` / `api_base`；Key 在 GitHub Secret `AI_API_KEY`；⚠️ Secret `AI_MODEL` 若存在会覆盖配置文件 |
 | 一键触发 | `D:\Develop\TrendRadar\trigger-push.ps1`（第 4 节） |
 | 上游同步 | 本地 tag `upstream-v6.10.0` / `upstream-v6.11.0`（fork 与上游无共同历史，只能按文件移植） |
-| 已退役（仅历史） | `D:\Develop\wewe-rss`、`apps/server/.env.local`、`feeds/`、`sync-wechat-rss.ps1`、`login_and_persist.py`、`dbcheck.js`、`keep-wewe-rss-alive.ps1`、`.omo\plans\wechat-rss-setup.md` |
+| 已退役（文件已删） | `D:\Develop\wewe-rss` 仓库、`feeds/`、`sync-wechat-rss.ps1`、`keep-wewe-rss-alive.ps1`、`login_and_persist.py`、`dbcheck.js` 等已于 2026-10-28 从本仓库删除（git 历史可找回）；`.omo/plans/wechat-rss-setup.md` 同步移除 |
 
 ---
 

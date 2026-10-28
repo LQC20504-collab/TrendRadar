@@ -246,7 +246,12 @@ class RSSParser:
         published_at = self._parse_date(entry)
         summary = self._parse_summary(entry)
         author = self._parse_author(entry)
-        guid = entry.get("id") or entry.get("guid", {}).get("value") or url
+        # guid 兼容两种形态：feedparser 对 RSS2.0 的 <guid> 有时给 str（纯文本），
+        # 有时给 dict（带 value/isPermaLink）；直接把 str 当 dict 会抛
+        # AttributeError: 'str' object has no attribute 'get'（NASA 主站 feed 即如此）
+        guid_raw = entry.get("guid")
+        guid_value = guid_raw.get("value") if isinstance(guid_raw, dict) else guid_raw
+        guid = entry.get("id") or guid_value or url
 
         return ParsedRSSItem(
             title=title,

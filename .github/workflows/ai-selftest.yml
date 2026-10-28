@@ -27,18 +27,19 @@ jobs:
           print("BASE set =", bool(base), "| KEY =", "set" if key else "MISSING")
 
           cases = [
-              ("openai/glm-4.7-flash", {}),
-              ("openai/glm-4.5-flash", {}),
-              ("openai/glm-4.5-flash", {"thinking": {"type": "disabled"}}),
-              ("openai/glm-4-flash", {}),
+              ("openai/glm-4.7-flash", 3000),
+              ("openai/glm-4.7-flash", 3000),
+              ("openai/glm-4.5-flash", 3000),
+              ("openai/glm-4-flash", 3000),
           ]
-          for model, extra in cases:
+          for model, mt in cases:
+              extra = {}
               cfg = {
                   "MODEL": model, "API_KEY": key, "API_BASE": base,
-                  "TIMEOUT": 120, "TEMPERATURE": 0.7, "MAX_TOKENS": 800,
+                  "TIMEOUT": 180, "TEMPERATURE": 0.7, "MAX_TOKENS": mt,
                   "NUM_RETRIES": 0, "FALLBACK_MODELS": [], "EXTRA_PARAMS": extra,
               }
-              tag = model + (f" extra={extra}" if extra else "")
+              tag = model
               try:
                   out = AIClient(cfg).chat([{"role": "user", "content": "用一句话说明地球观测的意义"}])
                   print(f"[OK]   {tag} | len={len(out)} | {out[:100]!r}")

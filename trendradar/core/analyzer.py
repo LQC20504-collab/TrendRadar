@@ -8,7 +8,7 @@
 - count_word_frequency: 统计词频
 """
 
-from typing import Dict, List, Tuple, Optional, Callable
+from typing import Dict, List, Tuple, Optional, Callable, Set
 
 from trendradar.core.frequency import matches_word_groups, _word_matches
 from trendradar.utils.time import DEFAULT_TIMEZONE
@@ -502,6 +502,7 @@ def count_rss_frequency(
     timezone: str = DEFAULT_TIMEZONE,
     rank_threshold: int = 5,
     quiet: bool = False,
+    exclude_feed_ids: Optional[Set[str]] = None,
 ) -> Tuple[List[Dict], int]:
     """
     按关键词分组统计 RSS 条目（与热榜统计格式一致）
@@ -521,6 +522,7 @@ def count_rss_frequency(
         sort_by_position_first: 是否优先按配置位置排序
         timezone: 时区名称（用于时间格式化）
         quiet: 是否静默模式
+        exclude_feed_ids: 不参与关键词匹配的 RSS 源 ID 集合（可选，如期刊只进独立展示区）
 
     Returns:
         Tuple[List[Dict], int]: (统计结果列表, 总条目数)
@@ -571,6 +573,14 @@ def count_rss_frequency(
     for group in word_groups:
         group_key = group["group_key"]
         word_stats[group_key] = {"count": 0, "titles": []}
+
+    # 按源排除：这些源只进独立展示区（如期刊「论文速递」），不参与关键词统计。
+    # 必须在算 total_items 之前过滤，否则匹配率与日志里的分母会把期刊条目算进去。
+    if exclude_feed_ids:
+        rss_items = [
+            item for item in rss_items
+            if item.get("feed_id", "") not in exclude_feed_ids
+        ]
 
     total_items = len(rss_items)
     processed_urls = set()  # 用于去重

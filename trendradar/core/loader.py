@@ -219,6 +219,8 @@ def _load_rss_config(config_data: Dict) -> Dict:
         "USE_PROXY": advanced_rss.get("use_proxy", False),
         "PROXY_URL": rss_proxy_url,
         "FEEDS": expanded_feeds,
+        # 不参与关键词匹配的源（只进独立展示区，见 display.standalone.rss_feeds）
+        "KEYWORD_EXCLUDE_FEEDS": set(rss.get("keyword_exclude_feeds", []) or []),
         "FRESHNESS_FILTER": {
             "ENABLED": freshness_filter.get("enabled", True),  # 默认启用
             "MAX_AGE_DAYS": max_age_days,

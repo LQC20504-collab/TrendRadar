@@ -635,6 +635,14 @@ class NewsAnalyzer:
                 if feed_id in feed_items_map:
                     feed_data = feed_items_map[feed_id]
                     items = feed_data["items"]
+                    # 先按发布时间倒序再截断：feed 顺序不等于时间序
+                    # （Taylor & Francis 的条目顺序是乱的，不排会截到最老的几篇）
+                    # 无发布时间的条目（如 ScienceDirect）排序 key 为空，稳定排序后保留原顺序落在末尾
+                    items = sorted(
+                        items,
+                        key=lambda x: x.get("published_at") or "",
+                        reverse=True,
+                    )
                     if max_items > 0:
                         items = items[:max_items]
                     if items:
@@ -1112,6 +1120,9 @@ class NewsAnalyzer:
         # 从 display.regions.rss 统一控制 RSS 分析和展示
         rss_display_enabled = self.ctx.config.get("DISPLAY", {}).get("REGIONS", {}).get("RSS", True)
 
+        # 不参与关键词匹配的源（期刊 → 只走独立展示区「论文速递」）
+        exclude_feed_ids = set(self.ctx.config.get("RSS", {}).get("KEYWORD_EXCLUDE_FEEDS", set()) or set())
+
         # 加载关键词配置
         try:
             word_groups, filter_words, global_filters = self.ctx.load_frequency_words(self.frequency_file)
@@ -1173,6 +1184,7 @@ class NewsAnalyzer:
                 sort_by_position_first=sort_by_position_first,
                 timezone=timezone,
                 rank_threshold=self.rank_threshold,
+                exclude_feed_ids=exclude_feed_ids,
                 quiet=False,
             )
             if not rss_stats:
@@ -1197,6 +1209,7 @@ class NewsAnalyzer:
                 sort_by_position_first=sort_by_position_first,
                 timezone=timezone,
                 rank_threshold=self.rank_threshold,
+                exclude_feed_ids=exclude_feed_ids,
                 quiet=False,
             )
             if not rss_stats:
@@ -1216,6 +1229,7 @@ class NewsAnalyzer:
                     sort_by_position_first=sort_by_position_first,
                     timezone=timezone,
                     rank_threshold=self.rank_threshold,
+                    exclude_feed_ids=exclude_feed_ids,
                     quiet=True,
                 )
 
@@ -1236,6 +1250,7 @@ class NewsAnalyzer:
                 sort_by_position_first=sort_by_position_first,
                 timezone=timezone,
                 rank_threshold=self.rank_threshold,
+                exclude_feed_ids=exclude_feed_ids,
                 quiet=False,
             )
             if not rss_stats:
@@ -1255,6 +1270,7 @@ class NewsAnalyzer:
                     sort_by_position_first=sort_by_position_first,
                     timezone=timezone,
                     rank_threshold=self.rank_threshold,
+                    exclude_feed_ids=exclude_feed_ids,
                     quiet=True,
                 )
 

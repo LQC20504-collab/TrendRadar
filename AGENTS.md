@@ -15,7 +15,8 @@
 ## 1. 系统架构（推送式，零隧道）
 
 ```
-期刊 / 机构 RSS 源（ScienceDirect、ESA、NASA、SpaceNews…共 17 个，见 config.yaml rss.feeds）
+期刊 / 机构 RSS 源（ScienceDirect、Taylor & Francis、ESA、NASA、SpaceNews…共 20 个，见 config.yaml rss.feeds）
+   其中 8 本 GIS/RS 期刊走独立展示区「论文速递」（不进关键词区）
                 │
                 ▼  GitHub Actions（crawler.yml，手动 workflow_dispatch 触发）
    fetcher 抓取（临时故障自动重试一次）→ AI 翻译 → AI 分析 → 推送飞书 / ntfy
@@ -224,7 +225,8 @@ node D:\Develop\TrendRadar\dbcheck.js   # 只读查看账号 status（根目录�
 |---|---|
 | CI 工作流 | `D:\Develop\TrendRadar\.github\workflows\crawler.yml`（cron "17,47 * * * *" 不可靠 → 手动 workflow_dispatch） |
 | 去重逻辑 | `D:\Develop\TrendRadar\trendradar\storage\sqlite_mixin.py` |
-| **数据源配置** | `D:\Develop\TrendRadar\config\config.yaml` → `rss.feeds`（现 17 个源，2026-10-28 清理过一轮失效源，增删步骤见第 9 节） |
+| **数据源配置** | `D:\Develop\TrendRadar\config\config.yaml` → `rss.feeds`（现 20 个源，2026-10-28 清理失效源并新增 3 本 T&F 期刊，增删步骤见第 9 节） |
+| **论文速递** | 8 本期刊：`rss.keyword_exclude_feeds` + `display.standalone.rss_feeds`（两处同步），每源 3 条 |
 | RSS 解析器 | `trendradar/crawler/rss/parser.py`（2026-10-28 修复 guid 为 str 时崩溃） |
 | AI 模型配置 | `config.yaml` → `ai.model` / `api_base`；Key 在 GitHub Secret `AI_API_KEY`；⚠️ Secret `AI_MODEL` 若存在会覆盖配置文件 |
 | 一键触发 | `D:\Develop\TrendRadar\trigger-push.ps1`（第 4 节） |
@@ -319,3 +321,6 @@ gh workflow run crawler.yml                       # 立刻验证，别等 cron�
 - **新源首推会比较多**：属正常，`max_age_days` 调小即可；多源叠加时注意 `rss.feeds` 单次抓取总量与 `ai_analysis.max_news_for_analysis`（默认 150 条）的配额。
 - **加源前先本地探活**：`requests.get` + `feedparser` 看状态码与条目数，再用 `RSSParser().parse(text, feed_url=...)` 复验——TrendRadar 的解析器比 feedparser 更严格（例如 guid 形态、XML 语法），能过 feedparser 不代表能过它。加完跑一次 Actions 看日志里该源是否「获取 N 条」。
 - **2026-10-28 已清理的失效源**（勿原样加回）：GPS World（403 反爬）、GeoConnexion（404/403）、Planet Labs（全路径 404）、Maxar Blog（证书过期）、NASA Earth Observatory（XML 损坏，已改用 `www.nasa.gov/feed/`）、Google 研究博客（404，已改 `blog.google/technology/ai/rss/`）。
+- **可用通道**：ScienceDirect（`rss.sciencedirect.com/publication/science/<ISSN纯数字>`）、Taylor & Francis（`www.tandfonline.com/feed/rss/<slug>`，如 `tgis20`=IJGIS、`tgrs20`=GIScience & RS、`tjde20`=IJDE）。**不可用**：MDPI 403、Wiley 403、IEEE 418、Springer 404 —— 都是机房 IP 反爬，GitHub Actions 的 runner 同样是机房 IP，加进去只会变成新的坏源。
+- **`max_items` 的陷阱**：实现是 `parsed_items[:N]`（`fetcher.py:124`），全流程**没有任何排序**，取的是 feed 原始顺序的前 N 条。只适合给「无发布时间的源」做首抓闸门（如 ScienceDirect）；**有时间的源不要设**，否则会截掉最新文章（Taylor & Francis 的条目顺序就是乱的）。
+- **期刊源要登记两处**：`rss.keyword_exclude_feeds`（不参与关键词匹配/推送/AI）+ `display.standalone.rss_feeds`（进「论文速递」），两处必须同步；只加一处会导致“抓了但不显示”或“既进关键词区又进速递区”。关闭 `display.regions.standalone` 会让所有期刊文章从报告里消失。

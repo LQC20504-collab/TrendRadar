@@ -867,6 +867,16 @@ class NewsAnalyzer:
             if rss_count > 0:
                 content_parts.append(f"RSS {rss_count} 条")
             total_count = news_count + rss_count
+            # 独立展示区（论文速递）单独计数，否则日志会显示「合计 0 条」却实际推送了 24 篇
+            if standalone_data:
+                standalone_count = sum(
+                    len(feed.get("items", [])) for feed in standalone_data.get("rss_feeds", [])
+                ) + sum(
+                    len(plat.get("items", [])) for plat in standalone_data.get("platforms", [])
+                )
+                if standalone_count > 0:
+                    content_parts.append(f"独立展示 {standalone_count} 条")
+                    total_count += standalone_count
             print(f"[推送] 准备发送：{' + '.join(content_parts)}，合计 {total_count} 条")
 
             # 调度系统决策

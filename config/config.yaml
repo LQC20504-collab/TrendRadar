@@ -55,20 +55,6 @@ schedule:
 rss:
   enabled: true                       # 是否启用 RSS 抓取（true=启用, false=关闭）
 
-  # 不参与关键词匹配的 RSS 源（2026-10-28 新增）
-  # 这些源的文章【不会】进关键词分组、不会触发关键词推送、也不进 AI 分析，
-  # 只会出现在独立展示区「论文速递」（见 display.standalone.rss_feeds，两处必须同步）。
-  # 用途：学术期刊标题多为长句英文，命中关键词的概率低且噪音大，统一走速递区更清晰。
-  keyword_exclude_feeds:
-    - "j-remote-sensing-env"
-    - "j-isprs-jprs"
-    - "j-rs-applications"
-    - "j-computers-geosciences"
-    - "j-sustainable-cities-society"
-    - "j-ijgis"
-    - "j-giscience-rs"
-    - "j-int-digital-earth"
-
   # 文章新鲜度过滤（过滤超龄旧文章，避免重复推送）
   # 仅在推送阶段过滤，所有文章仍会存入数据库
   freshness_filter:
@@ -167,31 +153,31 @@ rss:
 
     # ──────────────────────────────────────────────────────────
     # GIS/RS 专业期刊（英文顶刊，ScienceDirect / Taylor & Francis 官方 RSS）
-    # 2026-08-13 新增，2026-10-28 起全部改走独立展示区「论文速递」
-    # ⚠️ 这 8 本刊已登记在 rss.keyword_exclude_feeds，不参与关键词匹配/推送/AI 分析，
-    #    因此统一设 max_age_days: 0 —— 新鲜度过滤对它们只会造成副作用
-    #    （论文发表日期常跨周，按 3 天过滤会把速递区清空）。
+    # 2026-08-13 新增；2026-10-28 曾短暂改为「论文速递」独立展示区，同日回退：
+    # 期刊重新参与关键词过滤（命中 frequency_words 才进报告/推送），因此恢复 max_age_days: 2
+    # —— 只推近 2 天内发表且命中关键词的论文，避免旧论文灌入。
+    # ScienceDirect 的条目无 pubDate，max_age_days 对它们实际不生效（靠 max_items 控量）。
     # ──────────────────────────────────────────────────────────
 
     - id: "j-remote-sensing-env"
       name: "Remote Sensing of Environment (RSE)"
       url: "https://rss.sciencedirect.com/publication/science/00344257"
-      max_age_days: 0
+      max_age_days: 2
 
     - id: "j-isprs-jprs"
       name: "ISPRS J. Photogrammetry & Remote Sensing"
       url: "https://rss.sciencedirect.com/publication/science/09242716"
-      max_age_days: 0
+      max_age_days: 2
 
     - id: "j-rs-applications"
       name: "Remote Sensing Applications: Society & Environment"
       url: "https://rss.sciencedirect.com/publication/science/23529385"
-      max_age_days: 0
+      max_age_days: 2
 
     - id: "j-computers-geosciences"
       name: "Computers & Geosciences"
       url: "https://rss.sciencedirect.com/publication/science/00983004"
-      max_age_days: 0
+      max_age_days: 2
 
     # 2026-10-25 新增：可持续城市与社会（Elsevier，ISSN 2210-6707）
     # 与上同属 ScienceDirect 官方 RSS，属城市/热环境/GIS 交叉方向
@@ -200,7 +186,7 @@ rss:
     - id: "j-sustainable-cities-society"
       name: "Sustainable Cities and Society"
       url: "https://rss.sciencedirect.com/publication/science/22106707"
-      max_age_days: 0
+      max_age_days: 2
       max_items: 20
 
     # 2026-10-28 新增：Taylor & Francis 三本 GIS/RS 核心刊（通道实测可用）
@@ -210,17 +196,17 @@ rss:
     - id: "j-ijgis"
       name: "Int. J. Geographical Information Science (IJGIS)"
       url: "https://www.tandfonline.com/feed/rss/tgis20"
-      max_age_days: 0
+      max_age_days: 2
 
     - id: "j-giscience-rs"
       name: "GIScience & Remote Sensing"
       url: "https://www.tandfonline.com/feed/rss/tgrs20"
-      max_age_days: 0
+      max_age_days: 2
 
     - id: "j-int-digital-earth"
       name: "Int. J. Digital Earth"
       url: "https://www.tandfonline.com/feed/rss/tjde20"
-      max_age_days: 0
+      max_age_days: 2
 
     # 自定义源示例
     # - id: "custom-feed"
@@ -320,26 +306,16 @@ display:
                                       # 注：热点词汇统计中的新增标记🆕不受此配置影响
 
     rss: true                         # RSS 订阅区域（true=显示并分析, false=隐藏并跳过分析）
-    standalone: true                  # 独立展示区：完整热榜/RSS，不受关键词过滤（true=显示, false=隐藏）
-                                      # 2026-10-28 打开：用于「论文速递」，关闭则所有期刊文章不再出现在报告里
+    standalone: false                 # 独立展示区：完整热榜/RSS，不受关键词过滤（true=显示, false=隐藏）
+                                      # 2026-10-28 关闭：期刊已回归关键词过滤，不再需要独立展示区
     ai_analysis: true                 # AI 分析区域（true=显示, false=隐藏）
 
   # 独立展示区：将指定平台/RSS 完整展示，不受关键词过滤
   # 推送展示由 regions.standalone 控制，AI 分析由 ai_analysis.include_standalone 控制
-  # ⚠️ 这里的 RSS 源应与 rss.keyword_exclude_feeds 保持一致（期刊只走速递区）
   standalone:
     platforms: ["zhihu", "wallstreetcn-hot"]     # 热榜平台 ID 列表（如 ["zhihu", "weibo"]）
-    rss_feeds:                                   # RSS 源 ID 列表（全部 GIS/RS 期刊 = 论文速递）
-      - "j-remote-sensing-env"
-      - "j-isprs-jprs"
-      - "j-rs-applications"
-      - "j-computers-geosciences"
-      - "j-sustainable-cities-society"
-      - "j-ijgis"
-      - "j-giscience-rs"
-      - "j-int-digital-earth"
-    max_items: 3                                 # 每个源最多展示条数（0=不限制）
-                                                 # 3 条 × 8 刊 = 24 条，控制推送卡片长度
+    rss_feeds: []                                # RSS 源 ID 列表（如 ["hacker-news"]）
+    max_items: 20                                # 每个源最多展示条数（0=不限制）
 
 
 # ===============================================================

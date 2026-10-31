@@ -657,7 +657,9 @@ def count_rss_frequency(
                     "source_name": item.get("feed_name", item.get("feed_id", "RSS")),
                     "time_display": time_display,
                     "count": 1,  # RSS 条目通常只出现一次
-                    "ranks": [rank],
+                    # RSS 没有真正的“排名”，这个数字只是按发布时间排的序号，
+                    # 显示出来会变成标题末尾一个莫名其妙的 [6]，所以不放进 ranks。
+                    "ranks": [],
                     "rank_threshold": rank_threshold,
                     "url": url,
                     "mobile_url": "",

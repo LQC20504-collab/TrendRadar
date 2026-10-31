@@ -242,15 +242,18 @@ def split_content_into_batches(
         total_news_line += f"（新增 {new_count} + {rss_new_count}）"
     base_header += f"{total_news_line}\n"
 
-    # 2. 热榜
-    hotlist_info = f"{b_s}热榜：{b_e} {total_hotlist_count}/{hotlist_total}"
-    if platform_total > 0:
-        hotlist_info += f"（平台 {platform_success}/{platform_total}）"
-    base_header += f"{hotlist_info}\n"
+    # 2. 热榜（没有热榜数据时整行不写，避免“热榜：0/0”这种噪音）
+    if hotlist_total > 0:
+        hotlist_info = f"{b_s}热榜：{b_e} {total_hotlist_count}/{hotlist_total}"
+        if platform_total > 0:
+            hotlist_info += f"（平台 {platform_success}/{platform_total}）"
+        base_header += f"{hotlist_info}\n"
 
-    # 3. RSS
+    # 3. RSS（用“新增/命中”说话，比 1/6 直观）
     if rss_source_total > 0:
-        rss_info = f"{b_s}RSS：{b_e} {rss_matched}/{rss_total_items}（源 {rss_source_success}/{rss_source_total}）"
+        rss_info = f"{b_s}RSS：{b_e} 新增 {rss_total_items} 条，命中 {rss_matched} 条"
+        if rss_source_total > 0:
+            rss_info += f"（源 {rss_source_success}/{rss_source_total}）"
         base_header += f"{rss_info}\n"
 
     # 4. 独立展示区（仅在有数据时显示）
@@ -274,26 +277,29 @@ def split_content_into_batches(
         rss_analyzed = ai_stats.get("rss_analyzed", 0)
         ai_mode_val = ai_stats.get("ai_mode", "")
 
-        ai_parts = [str(hotlist_analyzed)]
-        if ai_stats.get("include_rss", True):
-            ai_parts.append(str(rss_analyzed))
-        if ai_stats.get("include_standalone", False):
-            ai_parts.append(str(standalone_analyzed))
-        ai_display = " + ".join(ai_parts) if sum(int(p) for p in ai_parts) > 0 else "0"
+        # 用带标签的写法（“热榜 3 + RSS 5”），避免出现 “0 + 1” 这种看不懂的组合
+        ai_parts = []
+        if hotlist_analyzed:
+            ai_parts.append(f"热榜 {hotlist_analyzed}")
+        if ai_stats.get("include_rss", True) and rss_analyzed:
+            ai_parts.append(f"RSS {rss_analyzed}")
+        if ai_stats.get("include_standalone", False) and standalone_analyzed:
+            ai_parts.append(f"独立展示 {standalone_analyzed}")
+        ai_display = " + ".join(ai_parts)
 
         mode_suffix = ""
         if ai_mode_val and ai_mode_val != mode:
             mode_map = {"daily": "全天汇总", "current": "当前榜单", "incremental": "增量分析"}
             mode_suffix = f" [{mode_map.get(ai_mode_val, ai_mode_val)}]"
 
-        base_header += f"{b_s}AI 分析：{b_e} {ai_display}{mode_suffix}\n"
+        if ai_display:
+            base_header += f"{b_s}AI 分析：{b_e} {ai_display}{mode_suffix}\n"
 
     # === 空行分隔 ===
     base_header += "\n"
 
-    # === 下半部分：元信息 ===
-    base_header += f"{b_s}类型：{b_e} {report_type}\n"
-    base_header += f"{b_s}时间：{b_e} {now.strftime('%Y-%m-%d %H:%M:%S')}\n"
+    # === 下半部分：元信息（合并成一行，像人写的签名，而不是系统状态表） ===
+    base_header += f"{b_s}{report_type}{b_e} · {now.strftime('%m-%d %H:%M')}\n"
 
     top_words = report_data.get("stats", [])[:3]
     if top_words:
